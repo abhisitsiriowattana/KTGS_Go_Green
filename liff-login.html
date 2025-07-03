@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LIFF Test on GitHub Pages</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="https://static.line-scdn.net/liff/edge/versions/2.27.0/sdk.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+    #msg { margin: 40px auto; color: #1e90ff; font-size: 1.3em; word-break: break-all; }
+  </style>
+</head>
+<body>
+  <h1>LIFF Test (GitHub Pages)</h1>
+  <div id="msg">Loading...</div>
+  <script>
+    // ----- ใส่ LIFF ID ตรงนี้ -----
+    const LIFF_ID = "2007677132-Z38g9kmn";
+    function showMsg(text) { document.getElementById('msg').innerText = text; }
+    async function main() {
+      try {
+        showMsg("ก่อน liff.init");
+        await liff.init({ liffId: LIFF_ID });
+        showMsg(
+          "isInClient: " + liff.isInClient() + "\n" +
+          "userAgent: " + navigator.userAgent + "\n" +
+          "window.location: " + window.location.href
+        );
+        if (!liff.isInClient()) {
+          showMsg("กรุณาเปิดผ่านแอป LINE เท่านั้น");
+          return;
+        }
+        const profile = await liff.getProfile();
+        showMsg(
+          "userId: " + profile.userId + "\n" +
+          "displayName: " + profile.displayName
+        );
+      } catch (err) {
+        showMsg("LIFF error: " + (err && err.message ? err.message : JSON.stringify(err)));
+      }
+    }
+    main();
+  </script>
+</body>
+</html>
