@@ -65,16 +65,7 @@
       .tabs-ui, .support-btn-row { max-width: 99vw; }
       .spinner { width: 40px; height: 40px; border-width: 5px;}
     }
-    #debug {
-      margin: 10px 0;
-      color: #d00;
-      background: #fbeaea;
-      padding: 6px 10px;
-      border-radius: 8px;
-      font-size: 1em;
-      word-break: break-all;
-      display: none;
-    }
+    #debug { display: none; }
   </style>
 </head>
 <body>
@@ -87,7 +78,6 @@
     <div class="tabs-ui">
       <button class="tab-ui active" id="tab-signup" type="button">Waste Management System</button>
     </div>
-    <!-- Debug output -->
     <div id="debug"></div>
     <div class="form-outer">
       <form id="loginForm" autocomplete="on" class="form-inner">
@@ -109,12 +99,10 @@
         <div class="forgot-row">
           <button type="button" class="forgot-link" id="forgotPasswordBtn">Forgot Password?</button>
         </div>
-        <!-- ปรับตรงนี้ จาก Sign In เป็น Log In -->
         <button type="submit" class="sign-in-btn" id="signInBtn">Log In</button>
         <div class="msg" id="loginMsg"></div>
       </form>
     </div>
-    <!-- Change Password Form (hidden unless first login) -->
     <div class="form-outer" style="display:none;" id="change-password-outer">
       <form id="change-password-form" autocomplete="off" class="form-inner" style="margin-top:0;">
         <input type="text" name="username" id="changePwdUsername" autocomplete="username" value="" style="display:none;">
@@ -143,20 +131,21 @@
       Calls will only be picked up from 9 am to 5 pm only
     </div>
   </div>
-  <!-- Spinner -->
   <div id="spinnerBg" class="spinner-bg hidden">
     <div class="spinner"></div>
   </div>
   <script>
     // ====== CONFIG ======
-    // เปลี่ยน LIFF_ID ให้ตรงกับ LIFF ที่ตั้ง endpoint เป็น GitHub Pages นี้
-    const LIFF_ID = "2007677132-Z38g9kmn"; // <== แก้ไขให้ตรงกับ LIFF ของคุณ
+    const LIFF_ID = "2007677132-Z38g9kmn";
     const GAS_URL = "https://script.google.com/macros/s/AKfycbzyFGNW06_ky5ZvmKHMcGGbLbuEpxgeLdqaR1665JRKnOoksXKxNav-ez3PbNBFFt6HxA/exec";
-    // เปลี่ยน CAMERA_LIFF_URL ให้เป็น liff.line.me ของ LIFF กล้อง (ถ้า endpoint อยู่บน GitHub Pages เหมือนกันให้เปลี่ยนให้ตรง)
     const CAMERA_LIFF_URL = "https://liff.line.me/2007678556-w9jamgJY";
 
     let _lineUserId = "";
     let liffReady = false;
+    let isAlreadyLoggedIn = false; // flag: login success in this session
+    let _currentUserId = "";
+    let _currentPassword = "";
+
     const signInBtn = document.getElementById('signInBtn');
     const btnChangePassword = document.getElementById('btnChangePassword');
     const spinnerBg = document.getElementById('spinnerBg');
@@ -169,29 +158,13 @@
       }
     }
 
-    // Debug helper
-    function debugMsg(msg) {
-      const dbg = document.getElementById('debug');
-      dbg.innerText = msg;
-      dbg.style.display = "block";
-    }
-
-    // LIFF INIT ROBUST VERSION (แสดง debugMsg แทน alert)
+    // ===== LIFF INIT =====
     async function initLiffUserId() {
       showSpinner(true);
       try {
         await liff.init({ liffId: LIFF_ID });
-        debugMsg(
-          "isInClient: " + liff.isInClient() + "\n" +
-          "userAgent: " + navigator.userAgent + "\n" +
-          "window.location: " + window.location.href
-        );
         if (!liff.isInClient()) {
-          debugMsg("❌ กรุณาเปิดผ่านแอป LINE เท่านั้น\n\n" +
-            "isInClient: " + liff.isInClient() + "\n" +
-            "userAgent: " + navigator.userAgent + "\n" +
-            "window.location: " + window.location.href
-          );
+          alert("❌ กรุณาเปิดผ่านแอป LINE เท่านั้น");
           showSpinner(false);
           return;
         }
@@ -201,14 +174,19 @@
           return;
         }
         const profile = await liff.getProfile();
-        debugMsg('profile: ' + JSON.stringify(profile));
         _lineUserId = profile.userId || "";
         liffReady = true;
-        if (!_lineUserId) {
-          debugMsg("❌ ไม่สามารถดึง userId ได้ กรุณาลองใหม่");
+        // เช็คว่ามี session login อยู่หรือไม่
+        if (sessionStorage.getItem("liffLoginSuccess") === "1") {
+          isAlreadyLoggedIn = true;
+          // ถ้าเข้าใหม่ผ่าน rich menu ให้แจ้งเตือนและพาไปกล้อง
+          alert("คุณได้เข้าสู่ระบบเรียบร้อยแล้ว");
+          redirectToCamera();
+          showSpinner(false);
+          return;
         }
       } catch (err) {
-        debugMsg("❌ LIFF error: " + (err && err.message ? err.message : JSON.stringify(err)));
+        alert("❌ LIFF error: " + (err && err.message ? err.message : JSON.stringify(err)));
       }
       showSpinner(false);
     }
@@ -238,6 +216,11 @@
     // --- LOGIN ---
     document.getElementById('loginForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+      if (isAlreadyLoggedIn || sessionStorage.getItem("liffLoginSuccess") === "1") {
+        alert("คุณได้เข้าสู่ระบบเรียบร้อยแล้ว");
+        redirectToCamera();
+        return;
+      }
       const user = document.getElementById('loginUser').value.trim();
       const password = document.getElementById('loginPassword').value.trim();
       const loginMsg = document.getElementById('loginMsg');
@@ -261,7 +244,6 @@
           body: JSON.stringify({ action: "login", user, password, lineUserId: _lineUserId })
         });
         const txt = await res.text();
-        debugMsg("response: " + txt);
         let data;
         try {
           data = JSON.parse(txt);
@@ -274,6 +256,8 @@
         if (data.status === "ok") {
           loginMsg.textContent = "เข้าสู่ระบบสำเร็จ";
           loginMsg.classList.add("success");
+          sessionStorage.setItem("liffLoginSuccess", "1");
+          isAlreadyLoggedIn = true;
           if (data.user && data.user.isFirstLogin) {
             document.getElementById('loginForm').style.display = "none";
             document.getElementById('change-password-outer').style.display = "flex";
@@ -282,7 +266,7 @@
             window._currentPassword = password;
           } else {
             await registerLineUserToSheet(user, _lineUserId);
-            redirectToCamera(user, _lineUserId);
+            setTimeout(() => redirectToCamera(user, _lineUserId), 600);
           }
         } else {
           loginMsg.textContent = data.message || "เข้าสู่ระบบไม่สำเร็จ";
@@ -344,10 +328,10 @@
         if (data.status === "ok") {
           changePwdMsg.textContent = "เปลี่ยนรหัสผ่านสำเร็จ กำลังเข้าสู่ระบบ...";
           changePwdMsg.classList.add('success');
+          sessionStorage.setItem("liffLoginSuccess", "1");
+          isAlreadyLoggedIn = true;
           await registerLineUserToSheet(window._currentUserId, _lineUserId);
-          setTimeout(() => {
-            redirectToCamera(window._currentUserId, _lineUserId);
-          }, 1200);
+          setTimeout(() => redirectToCamera(window._currentUserId, _lineUserId), 1200);
         } else {
           changePwdMsg.textContent = data.message || "เปลี่ยนรหัสผ่านไม่สำเร็จ";
           changePwdMsg.classList.add('error');
@@ -366,17 +350,25 @@
           headers: { "Content-Type": "text/plain" },
           body: JSON.stringify({ action: "registerLineUserId", user: empId, lineUserId: lineUserId })
         });
-      } catch (e) {
-        console.error("registerLineUserToSheet error:", e);
-      }
+      } catch (e) {}
     }
 
     function redirectToCamera(empId, lineUserId) {
-      window.location.href = CAMERA_LIFF_URL + `?empId=${encodeURIComponent(empId)}&lineUserId=${encodeURIComponent(lineUserId)}`;
+      // ถ้ามีข้อมูลใน session ใช้ล่าสุด ถ้าไม่มีก็ใช้ argument
+      const emp = empId || _currentUserId || "";
+      const lineId = lineUserId || _lineUserId || "";
+      window.location.href = CAMERA_LIFF_URL + `?empId=${encodeURIComponent(emp)}&lineUserId=${encodeURIComponent(lineId)}`;
     }
 
     window.addEventListener('DOMContentLoaded', function() {
       showSpinner(false);
+      // Reset form visibility (ในกรณี reload)
+      document.getElementById('loginForm').style.display = "";
+      document.getElementById('change-password-outer').style.display = "none";
+      // ถ้า login แล้ว
+      if (sessionStorage.getItem("liffLoginSuccess") === "1") {
+        isAlreadyLoggedIn = true;
+      }
     });
   </script>
 </body>
