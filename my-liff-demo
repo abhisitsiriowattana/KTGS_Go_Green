@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>My LIFF on GitHub Pages</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="https://static.line-scdn.net/liff/edge/versions/2.27.0/sdk.js"></script>
+</head>
+<body>
+  <h1>LIFF Test</h1>
+  <div id="msg"></div>
+  <script>
+    const LIFF_ID = "2007677132-Z38g9kmn"; // ใส่ LIFF ID ที่ได้จาก LINE Developers
+    function showMsg(m) { document.getElementById('msg').innerText = m; }
+    async function main() {
+      try {
+        showMsg("ก่อน liff.init");
+        await liff.init({ liffId: LIFF_ID });
+        showMsg("isInClient: " + liff.isInClient());
+        if (!liff.isInClient()) {
+          showMsg("กรุณาเปิดผ่าน LINE");
+          return;
+        }
+        const profile = await liff.getProfile();
+        showMsg("userId: " + profile.userId);
+      } catch (err) {
+        showMsg("LIFF error: " + err.message);
+      }
+    }
+    main();
+  </script>
+</body>
+</html>
