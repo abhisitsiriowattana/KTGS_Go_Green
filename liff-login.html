@@ -109,7 +109,8 @@
         <div class="forgot-row">
           <button type="button" class="forgot-link" id="forgotPasswordBtn">Forgot Password?</button>
         </div>
-        <button type="submit" class="sign-in-btn" id="signInBtn">Sign In</button>
+        <!-- ปรับตรงนี้ จาก Sign In เป็น Log In -->
+        <button type="submit" class="sign-in-btn" id="signInBtn">Log In</button>
         <div class="msg" id="loginMsg"></div>
       </form>
     </div>
@@ -179,7 +180,6 @@
     async function initLiffUserId() {
       showSpinner(true);
       try {
-        debugMsg("ก่อน liff.init");
         await liff.init({ liffId: LIFF_ID });
         debugMsg(
           "isInClient: " + liff.isInClient() + "\n" +
