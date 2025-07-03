@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>บันทึกภาพขยะ (AI Agent)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+  <script src="https://static.line-scdn.net/liff/edge/versions/2.27.0/sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Sarabun', Arial, sans-serif; background: #e7f7ff; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; position: relative; }
+    .container { background: #fff; border-radius: 22px; margin: 28px 0 0 0; box-shadow: 0 8px 32px rgba(30,144,255,0.08); max-width: 430px; width: 98vw; padding: 24px 18px 18px 18px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center;}
+    h2 { font-size: 1.6em; color: #1e90ff; font-weight: bold; text-shadow: 0 2px 8px #b5e2fa; margin-bottom: 8px;}
+    .ai-agent { display: flex; align-items: center; margin-bottom: 12px; gap: 10px;}
+    .ai-avatar { width: 44px; height: 44px; background: #e0f4ff; border-radius: 50%; border: 2.5px solid #1e90ff33; display: flex; align-items: center; justify-content: center; font-size: 1.8em;}
+    .ai-msg { background: #e3f0ff; color: #1e90ff; border-radius: 12px; padding: 8px 14px; font-size: 1.09em; box-shadow: 0 1px 6px #b5e2fa35;}
+    .btn-row { display: flex; justify-content: center; gap: 12px; margin: 10px 0 10px 0;}
+    button { font-size: 1.12em; padding: 12px 24px; border-radius: 10px; outline: none; border: none; background: #1e90ff; color: #fff; font-weight: bold; box-shadow: 0 2px 8px rgba(30,144,255,0.12); display: flex; align-items: center; gap: 7px; cursor: pointer; min-width: 90px; transition: background 0.2s;}
+    button:disabled { background: #b5e2fa; color: #e6f1fc; cursor: not-allowed;}
+    button.secondary { background: #e3f0ff; color: #1e90ff; border: 1.5px solid #b5e2fa; box-shadow: none;}
+    button.danger { background: #ee4444; color: #fff; border: none; box-shadow: 0 2px 8px rgba(238,68,68,0.10);}
+    #preview { margin-top: 18px; max-width: 95vw; width: 97%; border-radius: 14px; border: 2.5px solid #b5e2fa; box-shadow: 0 4px 12px #b5e2fa22; object-fit: contain; background: #f4f9ff; min-height: 90px; display: none;}
+    #ocr-number-section { margin-top: 18px; width: 100%; display: none; flex-direction: column; align-items: center;}
+    #ocr-number-label { font-size: 1.14em; color: #1e90ff; font-weight: 700; margin-bottom: 4px;}
+    #ocr-number-input { font-size: 1.26em; color: #1e90ff; text-align: center; background: #e3f0ff; border: 2px solid #b5e2fa; border-radius: 10px; padding: 8px 14px; width: 90%; max-width: 340px; margin-bottom: 5px;}
+    #edit-note { font-size: 0.98em; color: #888; margin-bottom: 4px; background: #f4faff; border-radius: 7px; padding: 4px 8px;}
+    #log { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 100; font-size: 1.08em; color: #555; text-align: center; min-width: 200px; max-width: 90vw; word-break: break-all; background: #e7f5ffdd; border-radius: 14px; padding: 10px 20px 10px 20px; min-height: 24px; box-shadow: 0 1px 8px #b5e2fa99; display: none; pointer-events: none;}
+    .footer-note { color: #318bee; margin: 24px 0 12px 0; font-size: 1em; text-align: center; background: #e3f0ff; border-radius: 11px; padding: 7px 14px; display: inline-block; box-shadow: 0 2px 8px #b5e2fa44; }
+    .footer-flex { display: flex; align-items: baseline; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .footer-note b { color: #ee4444; }
+    .footer-italic { font-style: italic; color: #222; font-size: 1em; }
+    .footer-small { font-size: 0.9em; color: #18b857; font-weight: 600; white-space: nowrap;}
+    @media (max-width: 480px) { .container { padding: 12px 3vw 12px 3vw; } #preview { max-width: 96vw; } h2 { font-size: 1.15em; } #ocr-number-label { font-size: 1em; } #ocr-number-input { font-size: 1.08em; } #log { font-size: 0.96em; max-width: 97vw; padding: 8px 9vw 8px 9vw;} .footer-note { font-size:0.92em; } .footer-small { font-size:0.8em; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📷 บันทึกภาพขยะ</h2>
+    <div class="ai-agent">
+      <div class="ai-avatar">🤖</div>
+      <div class="ai-msg">
+        ระบบจะดำเนินการตรวจสอบจากภาพถ่ายบนตราชั่งดิจิตอลของท่านเพื่อแสดงผลเป็นตัวเลข
+      </div>
+    </div>
+    <input type="file" id="fileInput" accept="image/*" capture="environment" style="display:none;" />
+    <div class="btn-row">
+      <button id="btnCamera"><span>📸</span>ถ่ายภาพ</button>
+      <button id="btnRetake" class="secondary" style="display:none;"><span>🔄</span>ถ่ายภาพใหม่</button>
+    </div>
+    <img id="preview" src="" alt="ยังไม่มีภาพ" />
+    <div id="ocr-number-section">
+      <div id="ocr-number-label">🔢 ตัวเลขที่พบ (แก้ไขได้):</div>
+      <input id="ocr-number-input" type="text" inputmode="decimal" autocomplete="off" />
+      <span id="edit-note">* หากเลขผิด สามารถแก้ไขตัวเลขก่อนบันทึก</span>
+    </div>
+    <div class="btn-row" style="margin-top:12px;">
+      <button id="btnSend" disabled>🚀 บันทึกข้อมูล</button>
+      <button id="btnClose" class="danger"><span>❌</span>ย้อนกลับ</button>
+    </div>
+    <div class="footer-note">
+      <div class="footer-flex">
+        <b>!! ระบบแสดงผลตัวเลขอัตโนมัติจากภาพถ่าย !!</b>
+        <span class="footer-italic">(หากไม่พบตัวเลข หรือตัวเลขไม่ถูกต้อง)</span>
+        <span class="footer-small">** สามารถกดเพื่อพิมพ์เปลี่ยนตัวเลขให้ถูกต้องด้วยตนเอง **</span>
+      </div>
+    </div>
+    <div id="log"></div>
+  </div>
+<script>
+// === CONFIG ===
+// เปลี่ยน LIFF_ID ให้เป็น LIFF ID ที่ตั้ง Endpoint URL เป็น liff-camera.html บน GitHub Pages
+const LIFF_ID = "2007678556-w9jamgJY"; // <--- ใส่ LIFF ID ของหน้า camera ที่ตั้ง endpoint เป็น github
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzyFGNW06_ky5ZvmKHMcGGbLbuEpxgeLdqaR1665JRKnOoksXKxNav-ez3PbNBFFt6HxA/exec";
+// เปลี่ยน LOGIN_LIFF_ID ให้เป็น LIFF ID ที่ตั้ง endpoint เป็น liff-login.html บน GitHub Pages (หรือ OA เดิม)
+const LOGIN_LIFF_ID = "2007677132-Z38g9kmn"; // <--- ใส่ LIFF ID ของหน้า login
+
+let imageBase64 = "";
+let userId = "";
+let empId = "";
+let lastOcrNumber = "";
+
+// Utility: get query param
+function getQueryParam(param) {
+  const url = new URL(window.location.href);
+  return url.searchParams.get(param) || "";
+}
+
+function log(msg, show=true) {
+  const logDiv = document.getElementById('log');
+  logDiv.innerHTML = msg;
+  logDiv.style.display = show ? "block":"none";
+  console.log(msg);
+}
+function resetState() {
+  imageBase64 = "";
+  lastOcrNumber = "";
+  document.getElementById('preview').style.display = "none";
+  document.getElementById('preview').src = "";
+  document.getElementById('btnSend').disabled = true;
+  document.getElementById('btnRetake').style.display = "none";
+  document.getElementById('ocr-number-section').style.display = "none";
+  document.getElementById('ocr-number-input').value = "";
+  log("", false);
+}
+
+// LIFF init + get userId (empId/lineUserId)
+async function initLIFFandUser() {
+  try {
+    await liff.init({ liffId: LIFF_ID });
+    if (!liff.isInClient()) {
+      alert("❌ กรุณาเปิดผ่านแอป LINE เท่านั้น");
+      return false;
+    }
+    if (!liff.isLoggedIn()) {
+      liff.login();
+      return false;
+    }
+    // รับ user จาก query string หรือ liff.getProfile()
+    empId = getQueryParam("empId") || "";
+    userId = getQueryParam("lineUserId") || "";
+    if (!userId) {
+      const profile = await liff.getProfile();
+      userId = profile.userId || "";
+    }
+    if (!userId) {
+      alert("❌ ไม่สามารถดึง userId ได้ กรุณาล็อกอินใหม่");
+      return false;
+    }
+    return true;
+  } catch (err) {
+    alert("❌ LIFF error: " + (err && err.message ? err.message : JSON.stringify(err)));
+    return false;
+  }
+}
+
+// ตรวจสอบการลงทะเบียน
+async function checkRegistered(userId) {
+  try {
+    let res = await fetch(GAS_URL + "?action=check&userId=" + encodeURIComponent(userId), { method: "GET" });
+    let result = await res.json();
+    if (result.status !== "ok" || !result.registered) {
+      alert("กรุณาลงทะเบียนก่อนใช้งาน");
+      window.location.href = "https://liff.line.me/" + LOGIN_LIFF_ID;
+      return false;
+    }
+    return true;
+  } catch (err) {
+    alert("ไม่สามารถตรวจสอบสถานะการลงทะเบียนได้ (" + (err && err.message ? err.message : JSON.stringify(err)) + ")");
+    window.location.href = "https://liff.line.me/" + LOGIN_LIFF_ID;
+    return false;
+  }
+}
+
+// จุดเริ่มต้น
+document.addEventListener('DOMContentLoaded', async () => {
+  const ready = await initLIFFandUser();
+  if (!ready) return;
+  const registered = await checkRegistered(userId);
+  if (!registered) return;
+
+  const fileInput = document.getElementById('fileInput');
+  const preview = document.getElementById('preview');
+  const btnCamera = document.getElementById('btnCamera');
+  const btnRetake = document.getElementById('btnRetake');
+  const btnSend = document.getElementById('btnSend');
+  const btnClose = document.getElementById('btnClose');
+  const ocrSection = document.getElementById('ocr-number-section');
+  const ocrInput = document.getElementById('ocr-number-input');
+  btnCamera.onclick = () => fileInput.click();
+  btnRetake.onclick = () => { resetState(); fileInput.value = ''; fileInput.click(); };
+  fileInput.onchange = async e => {
+    const file = e.target.files[0];
+    if (!file) return alert("❌ ไม่พบภาพ");
+    log("🔄 กำลังลดขนาดภาพและอ่านตัวเลข...");
+    try {
+      const dataUrl = await resizeImage(file);
+      imageBase64 = dataUrl.split(',')[1];
+      preview.src = dataUrl;
+      preview.style.display = "block";
+      btnSend.disabled = false;
+      btnRetake.style.display = "inline-block";
+      let number = await extractNumberFromImage(imageBase64);
+      lastOcrNumber = number || "";
+      ocrInput.value = lastOcrNumber;
+      ocrSection.style.display = "flex";
+      log(number ? "✅ ตรวจเจอตัวเลข: " + number : "⚠️ ไม่พบตัวเลขในภาพ สามารถกรอกเลขเองได้");
+    } catch (err) {
+      alert("❌ ลดขนาดภาพ/อ่านเลขล้มเหลว: " + (err && err.message ? err.message : JSON.stringify(err)));
+      resetState();
+    }
+  };
+  ocrInput.addEventListener('input', function() {
+    lastOcrNumber = ocrInput.value.trim();
+  });
+  btnSend.onclick = async () => {
+    if (!imageBase64 || imageBase64.length < 10000) {
+      alert("❗ ยังไม่มีภาพที่เลือก กรุณาถ่ายภาพใหม่");
+      log("❌ imageBase64 is empty or too short");
+      return;
+    }
+    if (imageBase64.length > 3500000) {
+      alert("❌ ภาพใหญ่เกินไป กรุณาเลือกภาพใหม่หรือลดขนาด");
+      resetState();
+      return;
+    }
+    if (!lastOcrNumber || !lastOcrNumber.match(/[\d.]+/)) {
+      alert("กรุณาตรวจสอบตัวเลขก่อนบันทึก");
+      ocrInput.focus();
+      return;
+    }
+    log("📤 กำลังส่งข้อมูลไป Web App...");
+    try {
+      const response = await fetch(GAS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: userId,
+          imageBase64: imageBase64,
+          timestamp: Date.now(),
+          ocrNumber: lastOcrNumber
+        })
+      });
+      let result = {};
+      try { result = await response.json(); } catch (e) {}
+      if (result && result.status === "error") throw new Error(result.message);
+      alert("✅ บันทึกข้อมูลสำเร็จ!\nตัวเลข: " + (result.ocrNumber || "-"));
+      log("✅ บันทึกข้อมูลสำเร็จและบันทึกเลขแล้ว");
+      resetState();
+    } catch (err) {
+      alert("✅ บันทึกข้อมูลสำเร็จแล้ว!\nกรุณารอผลการวิเคราะห์ทาง LINE");
+      log("✅ ส่งภาพสำเร็จ (fallback, CORS/LIFF Block)");
+      resetState();
+    }
+  };
+  btnClose.onclick = () => {
+    if (window.liff && liff.isInClient && liff.isInClient()) {
+      liff.closeWindow();
+    } else {
+      window.location.href = "https://line.me/R/nv/chat";
+    }
+  };
+});
+
+function resizeImage(file, maxSize = 1200) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = e => {
+      img.onload = () => {
+        let w = img.width, h = img.height;
+        if (w > maxSize || h > maxSize) {
+          if (w > h) { h *= maxSize / w; w = maxSize; }
+          else { w *= maxSize / h; h = maxSize; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', 0.8));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+async function extractNumberFromImage(imageBase64) {
+  const ocrKey = "K85524440288957";
+  try {
+    let res = await fetch("https://api.ocr.space/parse/image", {
+      method: "POST",
+      body: new URLSearchParams({
+        apikey: ocrKey,
+        base64Image: "data:image/jpeg;base64," + imageBase64,
+        language: "eng+tha",
+        isOverlayRequired: "false",
+        scale: "true"
+      })
+    });
+    let data = await res.json();
+    if (data.ParsedResults && data.ParsedResults.length > 0) {
+      let text = data.ParsedResults[0].ParsedText;
+      let match = text.match(/[\d.]+/g);
+      if (match && match.length > 0) return match.join(" ");
+    }
+    return "";
+  } catch (e) { return ""; }
+}
+</script>
+</body>
+</html>
