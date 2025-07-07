@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>KTGS Go Green - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://static.line-scdn.net/liff/edge/versions/2.27.0/sdk.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #e7f7ff;
+      font-family: 'Sarabun', Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .phone-frame {
+      background: #f2faff;
+      width: 100vw;
+      max-width: 500px;
+      min-height: 100vh;
+      border-radius: 32px 32px 0 0;
+      overflow: hidden;
+      box-shadow: 0 4px 32px #8ed6ff22;
+      position: relative;
+      border: 1.5px solid #b5e2fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .top-bar {
+      width: 100%;
+      background: #5dc9ff;
+      color: #fff;
+      padding: 13px 0 4px 0;
+      text-align: center;
+      font-size: 1.1em;
+      border-radius: 0 0 22px 22px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      box-sizing: border-box;
+      min-height: 48px;
+    }
+    .top-bar .left {
+      flex: 1;
+      text-align: left;
+      padding-left: 28px;
+      font-size: 1.15em;
+      font-weight: 700;
+      letter-spacing: 1px;
+      opacity: 0.85;
+    }
+    .top-bar .center {
+      flex: 2;
+      text-align: center;
+      font-size: 1.25em;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .carousel {
+      margin: 20px 0 10px 0;
+      width: 98%;
+      max-width: 475px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .carousel-img {
+      width: 100%;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px #b5e2fa33;
+      overflow: hidden;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 130px;
+      cursor: pointer;
+      position: relative;
+      background: #d7eefd;
+    }
+    .carousel-img img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 18px;
+      background: #e7f7ff;
+      transition: filter 0.15s;
+      display: block;
+    }
+    .carousel-dots {
+      margin: 2px 0 0 0;
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+    }
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      background: #b5e2fa;
+      border-radius: 50%;
+      display: inline-block;
+      opacity: 0.7;
+      transition: background 0.2s;
+      cursor: pointer;
+      border: none;
+      outline: none;
+    }
+    .carousel-dot.active {
+      background: #1e90ff;
+      opacity: 1;
+    }
+
+    .profile-card {
+      background: linear-gradient(135deg, #4bbcf7 20%, #16e2a1 100%);
+      color: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 16px #b5e2fa33;
+      padding: 18px 18px 18px 18px;
+      margin: 0 0 17px 0;
+      width: 98%;
+      max-width: 475px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .profile-card .branch {
+      font-size: 1.19em;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .profile-card .branch .icon {
+      font-size: 1.14em;
+      margin-left: 4px;
+    }
+    .profile-card-row {
+      font-size: 1.09em;
+      margin-bottom: 2px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .profile-card-row .label {
+      font-weight: 600;
+      color: #eafff4;
+      opacity: 0.93;
+    }
+    .profile-card-row .value {
+      font-weight: 700;
+      color: #fff;
+    }
+    .profile-card-row .bold {
+      font-weight: bold;
+    }
+    .profile-card .status {
+      font-weight: 700;
+      color: #0acb7e;
+      background: #e7fff7;
+      border-radius: 8px;
+      padding: 2.5px 10px;
+      margin-left: 8px;
+      font-size: 0.98em;
+    }
+    .profile-card .userid {
+      color: #1e90ff;
+      background: #fff;
+      border-radius: 8px;
+      padding: 2.5px 9px;
+      font-size: 0.98em;
+      font-weight: bold;
+      margin-left: 8px;
+      letter-spacing: 0.04em;
+    }
+
+    .section-carousel {
+      width: 98%;
+      max-width: 475px;
+      border-radius: 18px;
+      background: #e7f7ff;
+      margin: 0 0 17px 0;
+      overflow: hidden;
+      box-shadow: 0 2px 10px #b5e2fa22;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .section-carousel-img {
+      width: 100%;
+      border-radius: 18px;
+      height: 95px;
+      background: #e7f7ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+    .section-carousel-img img {
+      width: 100%;
+      height: 95px;
+      object-fit: cover;
+      border-radius: 18px;
+      background: #e7f7ff;
+      transition: filter 0.15s;
+      display: block;
+    }
+    .section-carousel-dots {
+      margin: 2px 0 0 0;
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+    }
+    .section-carousel-dot {
+      width: 10px;
+      height: 10px;
+      background: #b5e2fa;
+      border-radius: 50%;
+      display: inline-block;
+      opacity: 0.7;
+      transition: background 0.2s;
+      cursor: pointer;
+      border: none;
+      outline: none;
+    }
+    .section-carousel-dot.active {
+      background: #1e90ff;
+      opacity: 1;
+    }
+
+    /* --- NEW BOTTOM NAVIGATION --- */
+    .bottom-nav {
+      width: 100vw;
+      max-width: 440px;
+      background: #80d9ff;
+      height: 102px;
+      border-radius: 36px 36px 0 0;
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      box-shadow: 0 1px 18px #b5e2fa77;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      z-index: 99;
+      padding: 0;
+    }
+    .nav-btn {
+      flex: 1 1 0;
+      height: 100%;
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      cursor: pointer;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      transition: filter 0.13s;
+      z-index: 1;
+    }
+    /* Support & Profile move to edge */
+    .nav-btn.left-edge {
+      align-items: flex-start;
+      padding-left: 8px;
+    }
+    .nav-btn.right-edge {
+      align-items: flex-end;
+      padding-right: 8px;
+    }
+    /* Home Active: white circle above nav bar */
+    .nav-btn .nav-circle {
+      width: 88px;
+      height: 89px;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      bottom: 62px;
+      transform: translate(-50%, 0);
+      z-index: 10;
+      box-shadow: 0 2px 10px #b5e2fa40;
+      display: none;
+    }
+    .nav-btn.active .nav-circle {
+      display: block;
+    }
+    /* Home Active: blue circle centered in white circle */
+    .nav-btn .nav-centered {
+      width: 69.5px;
+      height: 69.5px;
+      background: #80d9ff;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      bottom: 76.5px;
+      /* perfectly middle of .nav-circle (88px - 69.5px)/2 = 9.25px, 62px+9.25px=71.25, but visually 76.5px better for shadow */
+      transform: translate(-50%, 0);
+      z-index: 11;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 18px #b5e2fa66;
+    }
+    .nav-btn.active .nav-centered {
+      display: flex;
+    }
+    /* Home Active: icon and label inside blue circle */
+    .nav-btn.active .nav-centered .nav-icon {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      margin: 0 auto 2px auto;
+      z-index: 12;
+    }
+    .nav-btn.active .nav-centered .nav-label {
+      margin: 0;
+      font-size: 1.11em;
+      color: #fff;
+      font-weight: 700;
+      opacity: 1;
+      text-shadow: 0 1px 8px #1e90ff22;
+      letter-spacing: 0.01em;
+      z-index: 13;
+      line-height: 1.1;
+    }
+    /* Inactive: icon/label below nav bar */
+    .nav-btn:not(.active) .nav-icon {
+      width: 32px;
+      height: 32px;
+      margin-top: 24px;
+      filter: brightness(0) invert(1) opacity(0.72);
+      z-index: 2;
+    }
+    .nav-btn:not(.active) .nav-label {
+      display: none;
+    }
+    @media (max-width: 600px) {
+      .bottom-nav { max-width: 100vw; }
+      .nav-btn .nav-circle { width: 64px; height: 65px; bottom: 47px; }
+      .nav-btn .nav-centered { width: 48px; height: 48px; bottom: 57px; }
+      .nav-btn.active .nav-centered .nav-icon { width: 22px; height: 22px; }
+      .nav-btn:not(.active) .nav-icon { width: 18px; height: 18px; }
+      .nav-btn.left-edge { padding-left: 1vw; }
+      .nav-btn.right-edge { padding-right: 1vw; }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-frame">
+    <div class="top-bar">
+      <div class="left" id="topBarTime">--:--</div>
+      <div class="center">Welcome</div>
+    </div>
+
+    <!-- Carousel -->
+    <div class="carousel" id="mainCarousel"></div>
+
+    <!-- Profile Card -->
+    <div class="profile-card" id="profileCard">
+      <div class="branch">Branch : <span class="bold" id="branchValue">-</span></div>
+      <div class="profile-card-row">
+        <span class="label">Name :</span> <span class="value" id="nameValue">-</span>
+        <span class="label">Surname :</span> <span class="value" id="surnameValue">-</span>
+      </div>
+      <div class="profile-card-row">
+        <span class="label">Department :</span> <span class="value bold" id="deptValue">-</span>
+      </div>
+      <div class="profile-card-row">
+        <span class="label">Position :</span> <span class="value" id="posValue">-</span>
+        <span class="label">User ID :</span> <span class="userid" id="userIdValue">-</span>
+      </div>
+      <div class="profile-card-row">
+        <span class="label">Activity Code :</span> <span class="value" id="actCodeValue">-</span>
+        <span class="label">Status :</span> <span class="status" id="statusValue">-</span>
+      </div>
+    </div>
+
+    <!-- Section Carousel -->
+    <div class="section-carousel" id="sectionCarousel"></div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <button class="nav-btn left-edge" onclick="location.href='support.html'">
+      <img class="nav-icon" src="https://i.postimg.cc/wMvyh78j/support-2.png" alt="Support"/>
+    </button>
+    <button class="nav-btn" onclick="location.href='chat.html'">
+      <img class="nav-icon" src="https://i.postimg.cc/7ZqMZ9DP/chat-2.png" alt="Chat"/>
+    </button>
+    <button class="nav-btn active" onclick="location.href='home.html'">
+      <span class="nav-circle"></span>
+      <span class="nav-centered">
+        <img class="nav-icon" src="https://i.postimg.cc/4x9r5YQk/home-2.png" alt="Home"/>
+        <span class="nav-label">Home</span>
+      </span>
+    </button>
+    <button class="nav-btn" onclick="location.href='notif.html'">
+      <img class="nav-icon" src="https://i.postimg.cc/wT1k7v9N/notif-2.png" alt="Notif"/>
+    </button>
+    <button class="nav-btn right-edge" onclick="location.href='profile.html'">
+      <img class="nav-icon" src="https://i.postimg.cc/yYx2r6wF/profile-2.png" alt="Profile"/>
+    </button>
+  </div>
+
+  <script>
+    // === CONFIG ===
+    // เปลี่ยน LIFF_ID ให้เป็น LIFF ID ที่ตั้ง Endpoint URL เป็น liff-home.html บน GitHub Pages
+    const LIFF_ID = "2007678556-w9jamgJY"; // <--- ใส่ LIFF ID ของหน้า home ที่ตั้ง endpoint เป็น github
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbzyFGNW06_ky5ZvmKHMcGGbLbuEpxgeLdqaR1665JRKnOoksXKxNav-ez3PbNBFFt6HxA/exec";
+    // เปลี่ยน LOGIN_LIFF_ID ให้เป็น LIFF ID ที่ตั้ง endpoint เป็น liff-login.html บน GitHub Pages (หรือ OA เดิม)
+    const LOGIN_LIFF_ID = "2007677132-Z38g9kmn"; // <--- ใส่ LIFF ID ของหน้า login
+
+    // --- Top bar time ---
+    function updateTime() {
+      const now = new Date();
+      const h = now.getHours().toString().padStart(2, "0");
+      const m = now.getMinutes().toString().padStart(2, "0");
+      document.getElementById('topBarTime').textContent = `${h}:${m}`;
+    }
+    updateTime();
+    setInterval(updateTime, 10000);
+
+    // --- LIFF Login Check ---
+    async function checkLiffLogin() {
+      try {
+        await liff.init({ liffId: LIFF_ID });
+        if (!liff.isInClient()) {
+          alert("โปรดเปิดหน้านี้ผ่านแอป LINE เท่านั้น");
+          return false;
+        }
+        if (!liff.isLoggedIn()) {
+          liff.login();
+          return false;
+        }
+    
+    // Optionally, check registration here and redirect if needed
+        const profile = await liff.getProfile();
+    // สามารถใช้งาน profile.userId เพื่อดึงข้อมูลเพิ่มเติมหรือ redirect ได้
+        return true;
+      } catch (e) {
+        alert("เกิดข้อผิดพลาดในการเข้าสู่ LIFF: " + e.message);
+        return false;
+      }
+    }
+    // Run LIFF check on load
+    document.addEventListener('DOMContentLoaded', async () => {
+      const ready = await checkLiffLogin();
+      if (!ready) return;
+      loadProfileCard();
+    });
+
+    // --- Carousel data (banner) ---
+    // Each: {img: url, link: url}
+    const banners = [
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2025/02/68-02-27-banner-warning-scammer-call-center-scaled.jpg",
+        link: "https://www.ktbgs.co.th/ktbgs-news/warning-to-scammer-call-center/"
+      },
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2025/03/KTGS_1659-CAC-anticorruption-scaled.jpg",
+        link: "https://www.ktbgs.co.th/ktbgs-news/cac-anti-corruption/"
+      },
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2023/05/banner-%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%AA%E0%B8%A1%E0%B8%B1%E0%B8%84%E0%B8%A3%E0%B8%87%E0%B8%B2%E0%B8%99-v-02-2500px-3-revise2-02-scaled.jpg",
+        link: "https://www.ktbgs.co.th/careers/opening-positions/"
+      },
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2021/05/ktbgs-chemical-protection-cleaning-Covid-2021.jpg",
+        link: "https://www.ktbgs.co.th/ktbgs-news/chemical-protection-cleaning/"
+      },
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2018/09/Service1-1.jpg",
+        link: "https://www.ktbgs.co.th/services/cash-logistic/"
+      },
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2018/09/20180606_06-07-57_C24_5633.jpg",
+        link: "https://www.ktbgs.co.th/services/security/"
+      },                  
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2019/05/20180606_08-01-09_V56_3547_edit.jpg",
+        link: "https://www.ktbgs.co.th/services/cleaning/"
+      }
+    ];
+    let mainCarouselIndex = 0;
+    function renderMainCarousel() {
+      const carouselDiv = document.getElementById('mainCarousel');
+      carouselDiv.innerHTML = `
+        <div class="carousel-img" id="mainCarouselImg" onclick="window.open('${banners[mainCarouselIndex].link}','_blank')">
+          <img src="${banners[mainCarouselIndex].img}" alt="Banner"/>
+        </div>
+        <div class="carousel-dots">${banners.map((_,i)=>`<span class="carousel-dot${i===mainCarouselIndex?' active':''}" onclick="setMainCarouselIndex(${i})"></span>`).join('')}</div>
+      `;
+    }
+    function setMainCarouselIndex(i) {
+      mainCarouselIndex = i;
+      renderMainCarousel();
+    }
+    function mainCarouselNext() {
+      mainCarouselIndex = (mainCarouselIndex + 1) % banners.length;
+      renderMainCarousel();
+    }
+    renderMainCarousel();
+    setInterval(mainCarouselNext, 5000);
+
+    // --- Section Carousel data ---
+    const sectionBanners = [
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2024/08/KTGS-Wast-Management03-2.jpg",
+        link: "https://www.ktbgs.co.th/blog/esg-sustainability/"
+      },
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2024/10/Executive-KTGS-Go-Green-3-2-02.jpg",
+        link: "https://www.ktbgs.co.th/blog/saving-the-world-start-yourself/"
+      },
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2025/01/68-01-31-cover-SecretsOfSustainableService-ExpAs-v2-01-scaled.jpg",
+        link: "https://www.ktbgs.co.th/blog/secrets-of-sustainable-service/"
+      },
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2023/06/66-07-10-cover-%E0%B8%96%E0%B8%AD%E0%B8%94%E0%B8%9A%E0%B8%97%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1-md-%E0%B8%AA%E0%B8%A1%E0%B8%94%E0%B8%B8%E0%B8%A5.jpg",
+        link: "hhttps://www.ktbgs.co.th/blog/balance-happiness/"
+      }
+    ];
+    let sectionCarouselIndex = 0;
+    function renderSectionCarousel() {
+      const carouselDiv = document.getElementById('sectionCarousel');
+      carouselDiv.innerHTML = `
+        <div class="section-carousel-img" id="sectionCarouselImg" onclick="window.open('${sectionBanners[sectionCarouselIndex].link}','_blank')">
+          <img src="${sectionBanners[sectionCarouselIndex].img}" alt="Section"/>
+        </div>
+        <div class="section-carousel-dots">${sectionBanners.map((_,i)=>`<span class="section-carousel-dot${i===sectionCarouselIndex?' active':''}" onclick="setSectionCarouselIndex(${i})"></span>`).join('')}</div>
+      `;
+    }
+    function setSectionCarouselIndex(i) {
+      sectionCarouselIndex = i;
+      renderSectionCarousel();
+    }
+    function sectionCarouselNext() {
+      sectionCarouselIndex = (sectionCarouselIndex + 1) % sectionBanners.length;
+      renderSectionCarousel();
+    }
+    renderSectionCarousel();
+    setInterval(sectionCarouselNext, 6500);
+
+    // --- Profile Card Data from Google Sheet ---
+    // Mapping: Branch : "N", Name : "C+D", Surname : "E", Department : "K", Position : "I", User ID : "X", Activity Code : "O", S = status label
+    async function loadProfileCard() {
+      // Get empId and lineUserId from URL
+      function getQueryParam(param) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(param) || "";
+      }
+      const empId = getQueryParam("empId");
+      const lineUserId = getQueryParam("lineUserId");
+      if (!empId && !lineUserId) return;
+
+    // Use Google Apps Script as your API endpoint, or Sheets API via Apps Script
+      const SHEET_API = GAS_URL;
+      try {
+    // Call API to get user data by empId or lineUserId
+        const res = await fetch(SHEET_API + "?action=getUserProfile&empId=" + encodeURIComponent(empId) + "&lineUserId=" + encodeURIComponent(lineUserId));
+        const data = await res.json();
+        if (data && data.status === "ok" && data.user) {
+    // use Google Sheet column mapping: N,C,D,E,K,I,X,O,S
+          const userProfile = data.user;
+          document.getElementById('branchValue').innerText = userProfile.N || "-";
+          document.getElementById('nameValue').innerText = ((userProfile.C||"")+(userProfile.D?" "+userProfile.D:"")) || "-";
+          document.getElementById('surnameValue').innerText = userProfile.E || "-";
+          document.getElementById('deptValue').innerText = userProfile.K || "-";
+          document.getElementById('posValue').innerText = userProfile.I || "-";
+          document.getElementById('userIdValue').innerText = userProfile.X || "-";
+          document.getElementById('actCodeValue').innerText = userProfile.O || "-";
+          document.getElementById('statusValue').innerText = userProfile.S || "-";
+        }
+      } catch (e) {
+    // fallback: don't update
+      }
+    }
+  </script>
+</body>
+</html>
