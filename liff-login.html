@@ -138,7 +138,8 @@
     // ====== CONFIG ======
     const LIFF_ID = "2007677132-Z38g9kmn";
     const GAS_URL = "https://script.google.com/macros/s/AKfycbzyFGNW06_ky5ZvmKHMcGGbLbuEpxgeLdqaR1665JRKnOoksXKxNav-ez3PbNBFFt6HxA/exec";
-    const CAMERA_LIFF_URL = "https://liff.line.me/2007678556-w9jamgJY";
+    // const HOME_LIFF_URL = "https://liff.line.me/2007678556-w9jamgJY";
+    const HOME_LIFF_URL = "https://liff.line.me/2007678556-w9jamgJY";
 
     let _lineUserId = "";
     let liffReady = false;
@@ -184,8 +185,8 @@
         liffReady = true;
         // หากเคย login แล้ว (per LINE userId) ให้ alert และ redirect ออกเสมอ
         if (isLoggedIn()) {
-          alert("ปัจจุบันคุณได้เข้าสู่ระบบเรียบร้อยแล้ว คุณสามารถทำรายการบันทึก ฯลฯ ได้ทันที");
-          redirectToCamera();
+          alert("!!ปัจจุบันคุณได้เข้าสู่ระบบเรียบร้อยแล้ว กรุณารอสักครู่ระบบจะพาคุณไปที่หน้าหลักเพื่อทำรายการในลำดับถัดไป!!");
+          redirectToHome();
           showSpinner(false);
           return;
         }
@@ -227,8 +228,8 @@
       }
       // ถ้าเคย login แล้ว ห้ามเข้า (alert + redirect)
       if (isLoggedIn()) {
-        alert("ปัจจุบันคุณได้เข้าสู่ระบบเรียบร้อยแล้ว คุณสามารถทำรายการบันทึก ฯลฯ ได้ทันที");
-        redirectToCamera();
+        alert("!!ปัจจุบันคุณได้เข้าสู่ระบบเรียบร้อยแล้ว กรุณารอสักครู่ระบบจะพาคุณไปที่หน้าหลักเพื่อทำรายการในลำดับถัดไป!!");
+        redirectToHome();
         return;
       }
       const user = document.getElementById('loginUser').value.trim();
@@ -270,7 +271,7 @@
             _currentPassword = password;
           } else {
             await registerLineUserToSheet(user, _lineUserId);
-            setTimeout(() => redirectToCamera(user, _lineUserId), 600);
+            setTimeout(() => redirectToHome(user, _lineUserId), 600);
           }
         } else {
           loginMsg.textContent = data.message || "เข้าสู่ระบบไม่สำเร็จ";
@@ -334,7 +335,7 @@
           changePwdMsg.classList.add('success');
           setLoggedIn();
           await registerLineUserToSheet(_currentUserId, _lineUserId);
-          setTimeout(() => redirectToCamera(_currentUserId, _lineUserId), 1200);
+          setTimeout(() => redirectToHome(_currentUserId, _lineUserId), 1200);
         } else {
           changePwdMsg.textContent = data.message || "เปลี่ยนรหัสผ่านไม่สำเร็จ";
           changePwdMsg.classList.add('error');
@@ -356,11 +357,11 @@
       } catch (e) {}
     }
 
-    function redirectToCamera(empId, lineUserId) {
+    function redirectToHome(empId, lineUserId) {
       // ถ้ามีข้อมูลล่าสุดใช้จาก argument ถ้าไม่มีก็ใช้ global
       const emp = empId || _currentUserId || "";
       const lineId = lineUserId || _lineUserId || "";
-      window.location.href = CAMERA_LIFF_URL + `?empId=${encodeURIComponent(emp)}&lineUserId=${encodeURIComponent(lineId)}`;
+      window.location.href = HOME_LIFF_URL + `?empId=${encodeURIComponent(emp)}&lineUserId=${encodeURIComponent(lineId)}`;
     }
 
     window.addEventListener('DOMContentLoaded', function() {
@@ -370,7 +371,6 @@
       // ถ้ามี _lineUserId แล้ว และเคย login แล้ว (localStorage)
       // กรณี reload หรือเข้าจาก rich menu ให้ redirect ออกทันที
       // (ใน initLiffUserId จะ handle อีกทีหลัง liff พร้อม)
-      // -- ไม่ต้องทำซ้ำตรงนี้เพราะจะ handle ที่ initLiffUserId แล้ว --
     });
   </script>
 </body>
