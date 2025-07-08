@@ -38,14 +38,13 @@
       color: #fff;
       padding: 13px 0 4px 0;
       text-align: center;
-      font-size: 1.1em;
-      border-radius: 0 0 22px 22px;
+      font-size: 0.8em;
       position: relative;
       display: flex;
-      align-items: center;
-      justify-content: flex-start;
       box-sizing: border-box;
-      min-height: 48px;
+      min-height: 80px;
+      align-items: flex-start;
+      flex-direction: column;
     }
     .top-bar .left {
       flex: 1;
@@ -57,16 +56,47 @@
       opacity: 0.85;
     }
     .top-bar .center {
-      flex: 2;
+      flex: 0.4;
       text-align: center;
       font-size: 1.25em;
       font-weight: 700;
       letter-spacing: 0.02em;
     }
+    .top-bar .right {
+      flex: 0 0 60px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      height: 100%;
+      padding-right: 14px;
+    }
+    .back-circle-btn {
+      background: #fff;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px #5dc9ff33;
+      border: none;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.15s;
+      outline: none;
+    }
+    .back-circle-btn:active {
+      background: #b5e2fa;
+    }
+    .back-circle-btn img {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
     .carousel {
-      margin: 20px 0 10px 0;
-      width: 98%;
-      max-width: 475px;
+      margin: 50px 0 20px 0;
+      width: 100%;
+      max-width: 495px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -81,14 +111,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 130px;
+      height: 220px;
       cursor: pointer;
       position: relative;
       background: #d7eefd;
     }
     .carousel-img img {
       width: 100%;
-      height: 130px;
+      height: 220px;
       object-fit: cover;
       border-radius: 18px;
       background: #e7f7ff;
@@ -123,14 +153,20 @@
       color: #fff;
       border-radius: 20px;
       box-shadow: 0 4px 16px #b5e2fa33;
-      padding: 18px 18px 18px 18px;
+      padding: 22px 22px 22px 22px;
       margin: 0 0 17px 0;
-      width: 98%;
-      max-width: 475px;
+      width: 100%;
+      max-width: 450px;
       position: relative;
       display: flex;
       flex-direction: column;
       gap: 6px;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.13em;
+      font-weight: bold;
+      letter-spacing: 0.02em;
     }
     .profile-card .branch {
       font-size: 1.19em;
@@ -183,10 +219,21 @@
       margin-left: 8px;
       letter-spacing: 0.04em;
     }
-
+    .profile-img-nav {
+      width: 32px;
+      height: 32px;
+      margin-top: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      box-shadow: 0 1px 6px #b5e2fa80;
+      background: #fff;
+      z-index: 2;
+      display: block;
+    }
     .section-carousel {
-      width: 98%;
-      max-width: 475px;
+      width: 100%;
+      max-width: 495px;
       border-radius: 18px;
       background: #e7f7ff;
       margin: 0 0 17px 0;
@@ -201,7 +248,7 @@
     .section-carousel-img {
       width: 100%;
       border-radius: 18px;
-      height: 95px;
+      height: 188px;
       background: #e7f7ff;
       display: flex;
       align-items: center;
@@ -212,7 +259,7 @@
     }
     .section-carousel-img img {
       width: 100%;
-      height: 95px;
+      height: 188px;
       object-fit: cover;
       border-radius: 18px;
       background: #e7f7ff;
@@ -245,9 +292,9 @@
     /* --- NEW BOTTOM NAVIGATION --- */
     .bottom-nav {
       width: 100vw;
-      max-width: 440px;
+      max-width: 500px;
       background: #80d9ff;
-      height: 102px;
+      height: 88px;
       border-radius: 36px 36px 0 0;
       position: fixed;
       left: 50%;
@@ -266,15 +313,18 @@
       background: none;
       border: none;
       display: flex;
-      flex-direction: column;
+      justify-content: flex-start;
       align-items: center;
-      justify-content: flex-end;
       cursor: pointer;
       position: relative;
       margin: 0;
       padding: 0;
       transition: filter 0.13s;
       z-index: 1;
+      align-items: center;
+      flex-direction: column;
+      align-content: center;
+      flex-wrap: wrap;
     }
     /* Support & Profile move to edge */
     .nav-btn.left-edge {
@@ -288,12 +338,12 @@
     /* Home Active: white circle above nav bar */
     .nav-btn .nav-circle {
       width: 88px;
-      height: 89px;
+      height: 88px;
       background: #fff;
       border-radius: 50%;
       position: absolute;
       left: 50%;
-      bottom: 62px;
+      bottom: 20.5px;
       transform: translate(-50%, 0);
       z-index: 10;
       box-shadow: 0 2px 10px #b5e2fa40;
@@ -304,13 +354,13 @@
     }
     /* Home Active: blue circle centered in white circle */
     .nav-btn .nav-centered {
-      width: 69.5px;
-      height: 69.5px;
+      width: 69.46px;
+      height: 69.46px;
       background: #80d9ff;
       border-radius: 50%;
       position: absolute;
       left: 50%;
-      bottom: 76.5px;
+      bottom: 30.5px;
       /* perfectly middle of .nav-circle (88px - 69.5px)/2 = 9.25px, 62px+9.25px=71.25, but visually 76.5px better for shadow */
       transform: translate(-50%, 0);
       z-index: 11;
@@ -368,7 +418,12 @@
   <div class="phone-frame">
     <div class="top-bar">
       <div class="left" id="topBarTime">--:--</div>
-      <div class="center">Welcome</div>
+      <div class="center">Welcome to "KTGS Go Green"</div>
+      <div class="right">
+        <button class="back-circle-btn" onclick="window.location.href='https://line.me/R/nv'">
+          <img src="https://i.postimg.cc/3xZsp2cY/bx-back.png" alt="Back" />
+        </button>
+      </div>
     </div>
 
     <!-- Carousel -->
@@ -394,34 +449,38 @@
       </div>
     </div>
 
-    <!-- Section Carousel -->
+    <!-- Section Carousel (single image with link) -->
     <div class="section-carousel" id="sectionCarousel"></div>
   </div>
 
   <!-- Bottom Navigation -->
   <div class="bottom-nav">
     <button class="nav-btn left-edge" onclick="location.href='support.html'">
-      <img class="nav-icon" src="https://i.postimg.cc/wMvyh78j/support-2.png" alt="Support"/>
+      <img class="nav-icon" src="https://i.postimg.cc/FKNMVz1P/bx-support.png" alt="Support"/>
+      <span class="nav-label">Support</span>
     </button>
     <button class="nav-btn" onclick="location.href='chat.html'">
-      <img class="nav-icon" src="https://i.postimg.cc/7ZqMZ9DP/chat-2.png" alt="Chat"/>
+      <img class="nav-icon" src="https://i.postimg.cc/gjssdcG0/bx-report.png" alt="Chat"/>
+      <span class="nav-label">Report</span>
     </button>
-    <button class="nav-btn active" onclick="location.href='home.html'">
+    <button class="nav-btn active" onclick="window.location.href='https://liff.line.me/2007678556-w9jamgJY'">
       <span class="nav-circle"></span>
       <span class="nav-centered">
-        <img class="nav-icon" src="https://i.postimg.cc/4x9r5YQk/home-2.png" alt="Home"/>
+        <img class="nav-icon" src="https://i.postimg.cc/fRxKNByq/Vector.png" alt="Home"/>
         <span class="nav-label">Home</span>
       </span>
     </button>
-    <button class="nav-btn" onclick="location.href='notif.html'">
-      <img class="nav-icon" src="https://i.postimg.cc/wT1k7v9N/notif-2.png" alt="Notif"/>
+    <button class="nav-btn" onclick="location.href='notify.html'">
+      <img class="nav-icon" src="https://i.postimg.cc/K8BKgqgP/bx-notify.png" alt="Notify"/>
+      <span class="nav-label">Notify</span>
     </button>
-    <button class="nav-btn right-edge" onclick="location.href='profile.html'">
-      <img class="nav-icon" src="https://i.postimg.cc/yYx2r6wF/profile-2.png" alt="Profile"/>
+    <button class="nav-btn right-edge" id="profileNavBtn" onclick="">
+      <img id="profileNavImg" class="nav-icon profile-img-nav" src="https://i.postimg.cc/yYx2r6wF/profile-2.png" alt="Profile"/>
+      <span class="nav-label">Profile</span>
     </button>
   </div>
-
   <script>
+
     // === CONFIG ===
     // เปลี่ยน LIFF_ID ให้เป็น LIFF ID ที่ตั้ง Endpoint URL เป็น liff-home.html บน GitHub Pages
     const LIFF_ID = "2007678556-w9jamgJY"; // <--- ใส่ LIFF ID ของหน้า home ที่ตั้ง endpoint เป็น github
@@ -439,8 +498,8 @@
     updateTime();
     setInterval(updateTime, 10000);
 
-    // --- LIFF Login Check ---
-    async function checkLiffLogin() {
+    // --- LIFF Login/Profile Image ---
+    async function checkLiffLoginAndProfile() {
       try {
         await liff.init({ liffId: LIFF_ID });
         if (!liff.isInClient()) {
@@ -451,25 +510,30 @@
           liff.login();
           return false;
         }
-    
-    // Optionally, check registration here and redirect if needed
         const profile = await liff.getProfile();
-    // สามารถใช้งาน profile.userId เพื่อดึงข้อมูลเพิ่มเติมหรือ redirect ได้
+        if (profile.pictureUrl) {
+          const img = document.getElementById('profileNavImg');
+          img.src = profile.pictureUrl;
+          img.alt = profile.displayName;
+        }
+        document.getElementById('profileNavBtn').onclick = function() {
+          window.location.href = 'profile.html';
+        };
         return true;
       } catch (e) {
         alert("เกิดข้อผิดพลาดในการเข้าสู่ LIFF: " + e.message);
         return false;
       }
     }
-    // Run LIFF check on load
+
     document.addEventListener('DOMContentLoaded', async () => {
-      const ready = await checkLiffLogin();
-      if (!ready) return;
+      await checkLiffLoginAndProfile();
+      renderMainCarousel();
+      renderSectionCarousel();
       loadProfileCard();
     });
 
     // --- Carousel data (banner) ---
-    // Each: {img: url, link: url}
     const banners = [
       {
         img: "https://www.ktbgs.co.th/wp-content/uploads/2025/02/68-02-27-banner-warning-scammer-call-center-scaled.jpg",
@@ -518,53 +582,24 @@
       mainCarouselIndex = (mainCarouselIndex + 1) % banners.length;
       renderMainCarousel();
     }
-    renderMainCarousel();
     setInterval(mainCarouselNext, 5000);
 
-    // --- Section Carousel data ---
-    const sectionBanners = [
-      {
-        img: "https://www.ktbgs.co.th/wp-content/uploads/2024/08/KTGS-Wast-Management03-2.jpg",
-        link: "https://www.ktbgs.co.th/blog/esg-sustainability/"
-      },
-      {
-        img: "https://www.ktbgs.co.th/wp-content/uploads/2024/10/Executive-KTGS-Go-Green-3-2-02.jpg",
-        link: "https://www.ktbgs.co.th/blog/saving-the-world-start-yourself/"
-      },
-      {
-        img: "https://www.ktbgs.co.th/wp-content/uploads/2025/01/68-01-31-cover-SecretsOfSustainableService-ExpAs-v2-01-scaled.jpg",
-        link: "https://www.ktbgs.co.th/blog/secrets-of-sustainable-service/"
-      },
-      {
-        img: "https://www.ktbgs.co.th/wp-content/uploads/2023/06/66-07-10-cover-%E0%B8%96%E0%B8%AD%E0%B8%94%E0%B8%9A%E0%B8%97%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1-md-%E0%B8%AA%E0%B8%A1%E0%B8%94%E0%B8%B8%E0%B8%A5.jpg",
-        link: "hhttps://www.ktbgs.co.th/blog/balance-happiness/"
-      }
-    ];
-    let sectionCarouselIndex = 0;
+    // --- Section Carousel (single image with link) --
+    const sectionBanner = {
+      img: "https://i.postimg.cc/xdV4DDFN/LINE-Rich-Menu.png",
+      link: "https://liff.line.me/2007678556-w9jamgJY/liff-camera.html"
+    };
     function renderSectionCarousel() {
       const carouselDiv = document.getElementById('sectionCarousel');
       carouselDiv.innerHTML = `
-        <div class="section-carousel-img" id="sectionCarouselImg" onclick="window.open('${sectionBanners[sectionCarouselIndex].link}','_blank')">
-          <img src="${sectionBanners[sectionCarouselIndex].img}" alt="Section"/>
+        <div class="section-carousel-img" onclick="window.open('${sectionBanner.link}','_blank')">
+          <img src="${sectionBanner.img}" alt="Section"/>
         </div>
-        <div class="section-carousel-dots">${sectionBanners.map((_,i)=>`<span class="section-carousel-dot${i===sectionCarouselIndex?' active':''}" onclick="setSectionCarouselIndex(${i})"></span>`).join('')}</div>
       `;
     }
-    function setSectionCarouselIndex(i) {
-      sectionCarouselIndex = i;
-      renderSectionCarousel();
-    }
-    function sectionCarouselNext() {
-      sectionCarouselIndex = (sectionCarouselIndex + 1) % sectionBanners.length;
-      renderSectionCarousel();
-    }
-    renderSectionCarousel();
-    setInterval(sectionCarouselNext, 6500);
 
     // --- Profile Card Data from Google Sheet ---
-    // Mapping: Branch : "N", Name : "C+D", Surname : "E", Department : "K", Position : "I", User ID : "X", Activity Code : "O", S = status label
     async function loadProfileCard() {
-      // Get empId and lineUserId from URL
       function getQueryParam(param) {
         const url = new URL(window.location.href);
         return url.searchParams.get(param) || "";
@@ -572,15 +607,11 @@
       const empId = getQueryParam("empId");
       const lineUserId = getQueryParam("lineUserId");
       if (!empId && !lineUserId) return;
-
-    // Use Google Apps Script as your API endpoint, or Sheets API via Apps Script
       const SHEET_API = GAS_URL;
       try {
-    // Call API to get user data by empId or lineUserId
         const res = await fetch(SHEET_API + "?action=getUserProfile&empId=" + encodeURIComponent(empId) + "&lineUserId=" + encodeURIComponent(lineUserId));
         const data = await res.json();
         if (data && data.status === "ok" && data.user) {
-    // use Google Sheet column mapping: N,C,D,E,K,I,X,O,S
           const userProfile = data.user;
           document.getElementById('branchValue').innerText = userProfile.N || "-";
           document.getElementById('nameValue').innerText = ((userProfile.C||"")+(userProfile.D?" "+userProfile.D:"")) || "-";
@@ -591,9 +622,7 @@
           document.getElementById('actCodeValue').innerText = userProfile.O || "-";
           document.getElementById('statusValue').innerText = userProfile.S || "-";
         }
-      } catch (e) {
-    // fallback: don't update
-      }
+      } catch (e) {}
     }
   </script>
 </body>
