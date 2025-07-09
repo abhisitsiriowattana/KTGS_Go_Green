@@ -38,7 +38,8 @@
       color: #fff;
       padding: 13px 0 4px 0;
       text-align: right;
-      font-size: 0.88em;
+      font-size: 1.15em;
+      font-weight: 700;
       position: relative;
       display: flex;
       box-sizing: border-box;
@@ -172,7 +173,7 @@
       letter-spacing: 0.01em;
     }
     .profile-card .branch {
-      font-size: 1.19em;
+      font-size: 1.0em;
       font-weight: 700;
       letter-spacing: 0.04em;
       margin-bottom: 5px;
@@ -181,11 +182,11 @@
       gap: 7px;
     }
     .profile-card .branch .icon {
-      font-size: 1.14em;
+      font-size: 1.0em;
       margin-left: 4px;
     }
     .profile-card-row {
-      font-size: 1.09em;
+      font-size: 1.0em;
       margin-bottom: 2px;
       display: flex;
       gap: 8px;
@@ -318,23 +319,22 @@
       background: none;
       border: none;
       display: flex;
-      justify-content: flex-start;
-      align-items: center;
       cursor: pointer;
       position: relative;
       margin: 0;
       padding: 0;
       transition: filter 0.13s;
       z-index: 1;
-      align-items: center;
       flex-direction: column;
-      align-content: center;
+      justify-content: space-evenly;
+      align-content: space-around;
       flex-wrap: wrap;
+      align-items: center;
     }
     /* Support & Profile move to edge */
     .nav-btn.left-edge {
       align-items: flex-start;
-      padding-left: 8px;
+      padding-left: 8.8px;
     }
     .nav-btn.right-edge {
       align-items: flex-end;
@@ -401,9 +401,9 @@
     }
     /* Inactive: icon/label below nav bar */
     .nav-btn:not(.active) .nav-icon {
-      width: 32px;
-      height: 32px;
-      margin-top: 24px;
+      width: 35px;
+      height: 38px;
+      margin-top: 22.2px;
       filter: brightness(0) invert(1) opacity(0.72);
       z-index: 2;
     }
@@ -414,12 +414,21 @@
       align-content: center;
       align-items: center;
     }
+    .nav-icon-bg {
+      border-radius: 50%;
+      width: 55px;
+      height: 45px;
+      display: flex;
+      justify-content: center;
+      border: 1px solid #C4FFFB;
+      align-items: flex-end;
+    }
     @media (max-width: 600px) {
       .bottom-nav { max-width: 100vw; }
       .nav-btn .nav-circle { width: 64px; height: 65px; bottom: 47px; }
       .nav-btn .nav-centered { width: 48px; height: 48px; bottom: 57px; }
       .nav-btn.active .nav-centered .nav-icon { width: 22px; height: 22px; }
-      .nav-btn:not(.active) .nav-icon { width: 18px; height: 18px; }
+      .nav-btn:not(.active) .nav-icon { width: 35px; height: 38px; }
       .nav-btn.left-edge { padding-left: 1vw; }
       .nav-btn.right-edge { padding-right: 1vw; }
     }
@@ -465,31 +474,39 @@
   </div>
 
   <!-- Bottom Navigation -->
-  <div class="bottom-nav">
+    <div class="bottom-nav">
     <button class="nav-btn left-edge" onclick="location.href='support.html'">
+    <span class="nav-icon-bg">
       <img class="nav-icon" src="https://i.postimg.cc/FKNMVz1P/bx-support.png" alt="Support"/>
-      <span class="nav-label">Support</span>
+    </span>
+    <span class="nav-label">Support</span>
     </button>
     <button class="nav-btn" onclick="location.href='chat.html'">
+    <span class="nav-icon-bg">
       <img class="nav-icon" src="https://i.postimg.cc/gjssdcG0/bx-report.png" alt="Chat"/>
-      <span class="nav-label">Report</span>
+    </span>
+    <span class="nav-label">Report</span>
     </button>
     <button class="nav-btn active" onclick="window.location.href='https://liff.line.me/2007678556-w9jamgJY'">
-      <span class="nav-circle"></span>
-      <span class="nav-centered">
-        <img class="nav-icon" src="https://i.postimg.cc/fRxKNByq/Vector.png" alt="Home"/>
-        <span class="nav-label">Home</span>
-      </span>
+    <span class="nav-circle"></span>
+    <span class="nav-centered">
+      <img class="nav-icon" src="https://i.postimg.cc/fRxKNByq/Vector.png" alt="Home"/>
+      <span class="nav-label">Home</span>
+    </span>
     </button>
     <button class="nav-btn" onclick="location.href='notify.html'">
+    <span class="nav-icon-bg">
       <img class="nav-icon" src="https://i.postimg.cc/K8BKgqgP/bx-notify.png" alt="Notify"/>
-      <span class="nav-label">Notify</span>
+    </span>
+    <span class="nav-label">Notify</span>
     </button>
     <button class="nav-btn right-edge" id="profileNavBtn" onclick="">
+    <span class="nav-icon-bg">
       <img id="profileNavImg" class="nav-icon profile-img-nav" src="https://i.postimg.cc/yYx2r6wF/profile-2.png" alt="Profile"/>
-      <span class="nav-label">Profile</span>
+    </span>
+    <span class="nav-label">Profile</span>
     </button>
-  </div>
+    </div>
   <script>
 
     // === CONFIG ===
@@ -598,7 +615,7 @@
     // --- Section Carousel (single image with link) --
     const sectionBanner = {
       img: "https://i.postimg.cc/xdV4DDFN/LINE-Rich-Menu.png",
-      link: "https://liff.line.me/2007678556-w9jamgJY/liff-camera.html"
+      link: "....................."
     };
     function renderSectionCarousel() {
       const carouselDiv = document.getElementById('sectionCarousel');
