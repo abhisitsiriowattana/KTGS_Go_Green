@@ -1,377 +1,671 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <title>KTGS Go Green</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <title>KTGS Go Green - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://static.line-scdn.net/liff/edge/versions/2.27.0/sdk.js"></script>
   <style>
-    html, body { height: 100%; margin: 0; padding: 0; background: #f5f6fa; overscroll-behavior: none; }
-    body { font-family: 'Sarabun', Arial, sans-serif; min-height: 100vh; background: #f5f6fa; box-sizing: border-box; }
-    .main-bg { background: #61cbf8; height: 170px; width: 100vw; border-radius: 0 0 32px 32px; position: absolute; top: 0; left: 0; z-index: 1; min-width: 100vw; }
-    .container { position: relative; max-width: 450px; width: 100vw; min-height: 100vh; margin: 0 auto; background: #fff; border-radius: 0 0 24px 24px; box-shadow: 0 2px 16px #1e90ff12; padding: 0 0 32px 0; z-index: 2; display: flex; flex-direction: column; align-items: center; }
-    .logo-top { text-align: center; margin-bottom: 12px; width: 100%; padding-top: 38px; }
-    .logo-top img { width: 278px; height: 105px; border-radius: 18px; background: #fff; box-shadow: 0 1px 8px #1e90ff22; object-fit: cover; border: 3px solid #e6e6e6; display: inline-block; max-width: 85vw; max-height: 25vw; }
-    .main-title { text-align: center; font-size: 2.15rem; color: #4DC247; margin-bottom: 8px; font-weight: bold; letter-spacing: 1px; margin-top: 0; position: relative; z-index: 2; font-family: inherit; }
-    .tabs-ui { display: flex; justify-content: center; width: 100%; margin-bottom: 18px; margin-top: 2px; border-radius: 12px; overflow: hidden; background: #ebebeb; border: 1px solid #e3e3e3; max-width: 400px; margin-left: auto; margin-right: auto; }
-    .tab-ui { flex: 1; padding: 13px 0; cursor: pointer; font-weight: bold; letter-spacing: 0.2px; background: #ebebeb; color: #888; border: none; outline: none; font-size: 1.12em; transition: background 0.13s, color 0.13s; }
-    .tab-ui.active { background: #fff; color: #2d9fd9; }
-    .form-outer { width: 100vw; display: flex; justify-content: center; }
-    .form-inner { width: 100%; max-width: 400px; margin: 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 2px 10px #1e90ff10; padding: 12px 16px 28px 16px; margin-top: 6px; margin-bottom: 0; display: flex; flex-direction: column; gap: 0.5em; }
-    .form-group { margin-bottom: 16px; width: 100%; }
-    .text-input-layout { position: relative; margin-bottom: 10px; width: 100%; }
-    .text-input-label { font-size: 1em; color: #2d9fd9; font-weight: 600; margin-bottom: 4px; display: block; }
-    .text-input-edit { width: 100%; padding: 14px 40px 14px 10px; font-size: 1.08em; border-radius: 10px; border: none; background: #f7f7f7; margin-bottom: 2px; border-bottom: 2px solid #e4e4e4; box-sizing: border-box; outline: none; transition: border 0.15s; }
-    .text-input-edit:focus { border-bottom: 2px solid #61cbf8; background: #f0faff; }
-    .material-icon-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; padding: 0; cursor: pointer; outline: none; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; }
-    .material-icon-btn img { width: 24px; height: 24px; display: block; pointer-events: none; user-select: none; }
-    .forgot-row { display: flex; justify-content: flex-end; margin-bottom: 12px; width: 100%; }
-    .forgot-link { color: #2d9fd9; font-size: 1em; font-weight: 500; text-decoration: underline; background: none; border: none; cursor: pointer; padding: 0; outline: none; margin-top: -3px; }
-    .msg { min-height: 28px; margin-top: 11px; text-align: center; font-weight: bold; font-size: 1em; width: 100%; word-break: break-word; display: flex; align-items: center; justify-content: center; }
-    .msg.success { color: #18b857; }
-    .msg.error { color: #ee4444; }
-    .sign-in-btn { width: 100%; padding: 16px 0; border-radius: 12px; background: #61cbf8; color: #fff; border: none; font-weight: bold; font-size: 1.15em; margin-bottom: 8px; margin-top: 4px; cursor: pointer; transition: background 0.13s; box-shadow: 0 2px 8px #1e90ff11; letter-spacing: 0.5px; }
-    .sign-in-btn:active { background: #3fbbe7; }
-    .support-btn-row { display: flex; justify-content: center; margin-top: 22px; margin-bottom: 8px; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto; }
-    .support-btn { background: #ff8966; color: #fff; border: none; border-radius: 20px; padding: 15px 0; width: 100%; font-size: 1.13em; font-weight: bold; cursor: pointer; box-shadow: 0 2px 8px #ffa5861a; transition: background 0.1s; letter-spacing: 0.5px; }
-    .support-btn:active { background: #f76b44; }
-    .support-note { font-size: 0.97em; color: #fc552b; text-align: center; margin-top: 2px; font-weight: 400; width: 100%; display: flex; align-items: center; justify-content: center; gap: 3px; }
-    .msg .error-icon { font-size: 1.25em; margin-right: 7px; color: #f44336; }
-    .spinner-bg {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(255,255,255,0.7);
-      z-index: 9999; display: flex; align-items: center; justify-content: center;
-      transition: opacity 0.2s;
+    body {
+      margin: 0;
+      padding: 0;
+      background: #e7f7ff;
+      font-family: 'Sarabun', Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
     }
-    .spinner {
-      border: 7px solid #e0f7fa;
-      border-top: 7px solid #61cbf8;
+    .phone-frame {
+      background: #f2faff;
+      width: 100vw;
+      max-width: 500px;
+      min-height: 100vh;
+      border-radius: 32px 32px 0 0;
+      overflow: hidden;
+      box-shadow: 0 4px 32px #8ed6ff22;
+      position: relative;
+      border: 1.5px solid #b5e2fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .top-bar {
+      width: 100%;
+      background: #5dc9ff;
+      color: #fff;
+      padding: 13px 0 4px 0;
+      text-align: right;
+      font-size: 1.15em;
+      font-weight: 700;
+      position: relative;
+      display: flex;
+      box-sizing: border-box;
+      min-height: 80px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+    }
+    .top-bar .left {
+      flex: 1;
+      text-align: -webkit-auto;
+      padding-left: 28px;
+      font-size: 1.15em;
+      font-weight: 700;
+      letter-spacing: 3.1px;
+      opacity: 0.85;
+    }
+    .top-bar .left {
+    flex: 1;
+    text-align: left;
+    padding-left: 28px;
+    font-size: 1.15em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    opacity: 0.85;
+    }
+    .top-bar .right {
+    flex: 0 0 60px;
+    display: flex;
+    align-items: flex-start;
+    height: 100%;
+    padding-right: 14px;
+    justify-content: flex-end;
+    }
+    .back-circle-btn {
+      background: #5d4c4c3b;
       border-radius: 50%;
-      width: 56px;
-      height: 56px;
-      animation: spin 1s linear infinite;
-      margin: auto;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px #5dc9ff33;
+      border: none;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.15s;
+      outline: none;
     }
-    @keyframes spin {
-      0% { transform: rotate(0deg);}
-      100% { transform: rotate(360deg);}
+    .back-circle-btn:active {
+      background: #b5e2fa;
     }
-    .hidden { display: none !important; }
-    @media (max-width: 520px) {
-      .container { max-width: 100vw; width: 100vw; border-radius: 0 0 20px 20px; }
-      .form-inner { max-width: 99vw; }
-      .logo-top img { width: 95vw; height: 100px; }
-      .tabs-ui, .support-btn-row { max-width: 99vw; }
-      .spinner { width: 40px; height: 40px; border-width: 5px;}
+    .back-circle-btn img {
+      width: 22px;
+      height: 22px;
+      display: block;
     }
-    #debug { display: none; }
+    .carousel {
+    margin: 18px 0 18px 0;
+    width: 100%;
+    max-width: 495px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    }
+    .carousel-img {
+      width: 100%;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px #b5e2fa33;
+      overflow: hidden;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 220px;
+      cursor: pointer;
+      position: relative;
+      background: #d7eefd;
+    }
+    .carousel-img img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 18px;
+      background: #e7f7ff;
+      transition: filter 0.15s;
+      display: block;
+    }
+    .carousel-dots {
+      margin: 2px 0 0 0;
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+    }
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      background: #b5e2fa;
+      border-radius: 50%;
+      display: inline-block;
+      opacity: 0.7;
+      transition: background 0.2s;
+      cursor: pointer;
+      border: none;
+      outline: none;
+    }
+    .carousel-dot.active {
+      background: #1e90ff;
+      opacity: 1;
+    }
+
+    .profile-card {
+      background: linear-gradient(135deg, #4bbcf7 20%, #16e2a1 100%);
+      color: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 16px #b5e2fa33;
+      padding: 13px 13px 13px 13px;
+      margin: 0 0 16px 0;
+      width: 100%;
+      max-width: 459px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+      min-height: 48px;
+      align-items: flex-start;
+      justify-content: center;
+      font-size: 1.13em;
+      font-weight: bold;
+      letter-spacing: 0.01em;
+    }
+    .profile-card .branch {
+      font-size: 1.0em;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .profile-card .branch .icon {
+      font-size: 1.0em;
+      margin-left: 4px;
+    }
+    .profile-card-row {
+      font-size: 1.0em;
+      margin-bottom: 2px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .profile-card-row .label {
+      font-weight: 600;
+      color: #eafff4;
+      opacity: 0.93;
+    }
+    .profile-card-row .value {
+      font-weight: 700;
+      color: #fff;
+    }
+    .profile-card-row .bold {
+      font-weight: bold;
+    }
+    .profile-card .status {
+      font-weight: 700;
+      color: #0acb7e;
+      background: #e7fff7;
+      border-radius: 8px;
+      padding: 2.5px 10px;
+      margin-left: 8px;
+      font-size: 0.98em;
+    }
+    .profile-card .userid {
+      color: #1e90ff;
+      background: #fff;
+      border-radius: 8px;
+      padding: 2.5px 9px;
+      font-size: 0.98em;
+      font-weight: bold;
+      margin-left: 8px;
+      letter-spacing: 0.04em;
+    }
+    .profile-img-nav {
+      width: 32px;
+      height: 32px;
+      margin-top: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      box-shadow: 0 1px 6px #b5e2fa80;
+      background: #fff;
+      z-index: 2;
+      display: block;
+    }
+    .section-carousel {
+      width: 100%;
+      max-width: 495px;
+      border-radius: 17px;
+      background: #e7f7ff00;
+      margin: 0 0 0.1px 0;
+      overflow: hidden;
+      box-shadow: 0 2px 10px #b5e2fa22;
+      display: flex;
+      flex-direction: row;
+      position: relative;
+      align-items: center;
+      align-content: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .section-carousel-img {
+      width: 100%;
+      border-radius: 18px;
+      height: 188px;
+      background: #e7f7ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+    .section-carousel-img img {
+      width: 100%;
+      height: 188px;
+      object-fit: cover;
+      border-radius: 18px;
+      background: #e7f7ff;
+      transition: filter 0.15s;
+      display: block;
+    }
+    .section-carousel-dots {
+      margin: 2px 0 0 0;
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+    }
+    .section-carousel-dot {
+      width: 10px;
+      height: 10px;
+      background: #b5e2fa;
+      border-radius: 50%;
+      display: inline-block;
+      opacity: 0.7;
+      transition: background 0.2s;
+      cursor: pointer;
+      border: none;
+      outline: none;
+    }
+    .section-carousel-dot.active {
+      background: #1e90ff;
+      opacity: 1;
+    }
+
+    /* --- NEW BOTTOM NAVIGATION --- */
+    .bottom-nav {
+      width: 100vw;
+      max-width: 500px;
+      background: #80d9ff;
+      height: 88px;
+      border-radius: 36px 36px 0 0;
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      box-shadow: 0 1px 18px #b5e2fa77;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      z-index: 99;
+      padding: 0;
+    }
+    .nav-btn {
+      flex: 1 1 0;
+      height: 100%;
+      background: none;
+      border: none;
+      display: flex;
+      cursor: pointer;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      transition: filter 0.13s;
+      z-index: 1;
+      flex-wrap: wrap;
+      flex-direction: column;
+      justify-content: space-around;
+      align-content: space-around;
+    }
+    /* Support & Profile move to edge */
+    .nav-btn.left-edge {
+      align-items: flex-start;
+      padding-left: 8.8px;
+    }
+    .nav-btn.right-edge {
+      align-items: flex-end;
+      padding-right: 8px;
+    }
+    /* Home Active: white circle above nav bar */
+    .nav-btn .nav-circle {
+      width: 88px;
+      height: 88px;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      bottom: 20.5px;
+      transform: translate(-50%, 0);
+      z-index: 10;
+      box-shadow: 0 2px 10px #b5e2fa40;
+      display: none;
+    }
+    .nav-btn.active .nav-circle {
+      display: flex;
+    }
+    /* Home Active: blue circle centered in white circle */
+    .nav-btn .nav-centered {
+      width: 69.46px;
+      height: 69.46px;
+      background: #80d9ff;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      bottom: 30.5px;
+      /* perfectly middle of .nav-circle (88px - 69.5px)/2 = 9.25px, 62px+9.25px=71.25, but visually 76.5px better for shadow */
+      transform: translate(-50%, 0);
+      z-index: 11;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 18px #b5e2fa66;
+    }
+    .nav-btn.active .nav-centered {
+      display: flex;
+    }
+    /* Home Active: icon and label inside blue circle */
+    .nav-btn.active .nav-centered .nav-icon {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      margin: 0 auto 2px auto;
+      z-index: 12;
+    }
+    .nav-label {
+      font-weight: bold;
+      color: #ffffff;
+    }
+    .nav-btn.active .nav-centered .nav-label {
+      margin: 0;
+      font-size: 1.11em;
+      opacity: 1;
+      text-shadow: 0 1px 8px #1e90ff22;
+      letter-spacing: 0.01em;
+      z-index: 13;
+      line-height: 1.1;
+    }
+    /* Inactive: icon/label below nav bar */
+    .nav-btn:not(.active) .nav-icon {
+      width: 42px;
+      height: 42px;
+      margin-top: 22.2px;
+      filter: brightness(0) invert(1) opacity(0.72);
+      z-index: 2;
+    }
+    .nav-btn:not(.active) .nav-label {
+      display: flex;
+      justify-content: center;
+      flex-wrap: nowrap;
+      align-content: center;
+      align-items: center;
+    }
+    .nav-icon-bg {
+      background: #D9D9D9;
+    border-radius: 50%;
+    width: 42px;        /* ขนาดวงกลม */
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #C4FFFB;
+    }
+    .nav-icon {
+    width: 24px;
+    height: 24px;
+    display: block;
+    }
+    @media (max-width: 600px) {
+      .bottom-nav { max-width: 100vw; }
+      .nav-btn .nav-circle { width: 64px; height: 65px; bottom: 47px; }
+      .nav-btn .nav-centered { width: 48px; height: 48px; bottom: 57px; }
+      .nav-btn.active .nav-centered .nav-icon { width: 22px; height: 22px; }
+      .nav-btn:not(.active) .nav-icon { width: 18px; height: 18px; }
+      .nav-btn.left-edge { padding-left: 1vw; }
+      .nav-btn.right-edge { padding-right: 1vw; }
+    }
   </style>
 </head>
 <body>
-  <div class="main-bg"></div>
-  <div class="container">
-    <div class="logo-top">
-      <img src="https://i.postimg.cc/VL4VbjvG/logo-ktgs.jpg" alt="KTGS Logo">
+  <div class="phone-frame">
+    <div class="top-bar">
+      <div class="left" id="topBarTime">--:--</div>
+      <div class="center">Welcome to "KTGS Go Green"</div>
+      <div class="right">
+        <button class="back-circle-btn" onclick="liff.closeWindow()">
+          <img src="https://i.postimg.cc/3xZsp2cY/bx-back.png" alt="Back" />
+        </button>
+      </div>
     </div>
-    <div class="main-title">KTGS Go Green</div>
-    <div class="tabs-ui">
-      <button class="tab-ui active" id="tab-signup" type="button">Waste Management System</button>
+
+    <!-- Carousel -->
+    <div class="carousel" id="mainCarousel"></div>
+
+    <!-- Profile Card -->
+    <div class="profile-card" id="profileCard">
+      <div class="branch">Branch : <span class="bold" id="branchValue">-</span></div>
+      <div class="profile-card-row">
+        <span class="label">Name :</span> <span class="value" id="nameValue">-</span>
+        <span class="label">Surname :</span> <span class="value" id="surnameValue">-</span>
+      </div>
+      <div class="profile-card-row">
+        <span class="label">Department :</span> <span class="value bold" id="deptValue">-</span>
+      </div>
+      <div class="profile-card-row">
+        <span class="label">Position :</span> <span class="value" id="posValue">-</span>
+        <span class="label">User ID :</span> <span class="userid" id="userIdValue">-</span>
+      </div>
+      <div class="profile-card-row">
+        <span class="label">Activity Code :</span> <span class="value" id="actCodeValue">-</span>
+        <span class="label">Status :</span> <span class="status" id="statusValue">-</span>
+      </div>
     </div>
-    <div id="debug"></div>
-    <div class="form-outer">
-      <form id="loginForm" autocomplete="on" class="form-inner">
-        <div class="form-group">
-          <div class="text-input-layout">
-            <label for="loginUser" class="text-input-label">User: (ID Employee)</label>
-            <input id="loginUser" type="text" class="text-input-edit" required autocomplete="username" placeholder="ID Employee" />
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="text-input-layout">
-            <label for="loginPassword" class="text-input-label">Password:</label>
-            <input id="loginPassword" type="password" class="text-input-edit" required autocomplete="current-password" placeholder="Password" />
-            <button type="button" class="material-icon-btn" id="togglePassBtn" aria-label="Toggle Password">
-              <img id="togglePassImg" src="https://i.postimg.cc/NMCptXsL/1750920820059-0.jpg" alt="Show/Hide Password" />
-            </button>
-          </div>
-        </div>
-        <div class="forgot-row">
-          <button type="button" class="forgot-link" id="forgotPasswordBtn">Forgot Password?</button>
-        </div>
-        <button type="submit" class="sign-in-btn" id="signInBtn">Log In</button>
-        <div class="msg" id="loginMsg"></div>
-      </form>
-    </div>
-    <div class="form-outer" style="display:none;" id="change-password-outer">
-      <form id="change-password-form" autocomplete="off" class="form-inner" style="margin-top:0;">
-        <input type="text" name="username" id="changePwdUsername" autocomplete="username" value="" style="display:none;">
-        <div class="main-title" style="font-size:1em; color:#4DC247;">Change New Password</div>
-        <div class="text-input-layout">
-          <label class="text-input-label">Current Password</label>
-          <input type="password" id="oldPassword" class="text-input-edit" required autocomplete="current-password">
-        </div>
-        <div class="text-input-layout">
-          <label class="text-input-label">New Password</label>
-          <input type="password" id="newPassword" class="text-input-edit" required autocomplete="new-password">
-        </div>
-        <div class="text-input-layout">
-          <label class="text-input-label">Confirm New Password</label>
-          <input type="password" id="confirmPassword" class="text-input-edit" required autocomplete="new-password">
-        </div>
-        <button id="btnChangePassword" type="button" class="sign-in-btn" style="margin-top:12px;">Change Password</button>
-        <div class="msg" id="changePwdMsg"></div>
-      </form>
-    </div>
-    <div class="support-btn-row">
-      <button class="support-btn" id="supportBtn" type="button">Support</button>
-    </div>
-    <div class="support-note">
-      <span style="font-size: 1.2em;">&#x26A0;</span>
-      Calls will only be picked up from 9 am to 5 pm only
-    </div>
+
+    <!-- Section Carousel (single image with link) -->
+    <div class="section-carousel" id="sectionCarousel"></div>
   </div>
-  <div id="spinnerBg" class="spinner-bg hidden">
-    <div class="spinner"></div>
-  </div>
+
+  <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+    <button class="nav-btn left-edge" onclick="location.href='support.html'">
+    <span class="nav-icon-bg">
+      <img class="nav-icon" src="https://i.postimg.cc/FKNMVz1P/bx-support.png" alt="Support"/>
+    </span>
+    <span class="nav-label">Support</span>
+    </button>
+    <button class="nav-btn" onclick="location.href='chat.html'">
+    <span class="nav-icon-bg">
+      <img class="nav-icon" src="https://i.postimg.cc/gjssdcG0/bx-report.png" alt="Chat"/>
+    </span>
+    <span class="nav-label">Report</span>
+    </button>
+    <button class="nav-btn active" onclick="window.location.href='https://liff.line.me/2007678556-w9jamgJY'">
+    <span class="nav-circle"></span>
+    <span class="nav-centered">
+      <img class="nav-icon" src="https://i.postimg.cc/fRxKNByq/Vector.png" alt="Home"/>
+      <span class="nav-label">Home</span>
+    </span>
+    </button>
+    <button class="nav-btn" onclick="location.href='notify.html'">
+    <span class="nav-icon-bg">
+      <img class="nav-icon" src="https://i.postimg.cc/K8BKgqgP/bx-notify.png" alt="Notify"/>
+    </span>
+    <span class="nav-label">Notify</span>
+    </button>
+    <button class="nav-btn right-edge" id="profileNavBtn" onclick="">
+    <span class="nav-icon-bg">
+      <img id="profileNavImg" class="nav-icon profile-img-nav" src="https://i.postimg.cc/yYx2r6wF/profile-2.png" alt="Profile"/>
+    </span>
+    <span class="nav-label">Profile</span>
+    </button>
+    </div>
   <script>
-    // ====== CONFIG ======
-    const LIFF_ID = "2007677132-Z38g9kmn";
+
+    // === CONFIG ===
+    // เปลี่ยน LIFF_ID ให้เป็น LIFF ID ที่ตั้ง Endpoint URL เป็น liff-home.html บน GitHub Pages
+    const LIFF_ID = "2007678556-w9jamgJY"; // <--- ใส่ LIFF ID ของหน้า home ที่ตั้ง endpoint เป็น github
     const GAS_URL = "https://script.google.com/macros/s/AKfycbzyFGNW06_ky5ZvmKHMcGGbLbuEpxgeLdqaR1665JRKnOoksXKxNav-ez3PbNBFFt6HxA/exec";
-    // const HOME_LIFF_URL = "https://liff.line.me/2007678556-w9jamgJY";
-    const HOME_LIFF_URL = "https://liff.line.me/2007678556-w9jamgJY";
+    // เปลี่ยน LOGIN_LIFF_ID ให้เป็น LIFF ID ที่ตั้ง endpoint เป็น liff-login.html บน GitHub Pages (หรือ OA เดิม)
+    const LOGIN_LIFF_ID = "2007677132-Z38g9kmn"; // <--- ใส่ LIFF ID ของหน้า login
 
-    let _lineUserId = "";
-    let liffReady = false;
-    let _currentUserId = "";
-    let _currentPassword = "";
+    // --- Top bar time ---
+    function updateTime() {
+      const now = new Date();
+      const h = now.getHours().toString().padStart(2, "0");
+      const m = now.getMinutes().toString().padStart(2, "0");
+      document.getElementById('topBarTime').textContent = `${h}:${m}`;
+    }
+    updateTime();
+    setInterval(updateTime, 10000);
 
-    function showSpinner(show) {
-      const spinnerBg = document.getElementById('spinnerBg');
-      if (show) spinnerBg.classList.remove('hidden');
-      else spinnerBg.classList.add('hidden');
-    }
-
-    // ใช้ localStorage สำหรับสถานะ login (per LINE userId)
-    function getLoginKey() {
-      return _lineUserId ? 'liffLoginSuccess_' + _lineUserId : '';
-    }
-    function isLoggedIn() {
-      const key = getLoginKey();
-      return key && localStorage.getItem(key) === '1';
-    }
-    function setLoggedIn() {
-      const key = getLoginKey();
-      if (key) localStorage.setItem(key, '1');
-    }
-
-    // ===== LIFF INIT =====
-    async function initLiffUserId() {
-      showSpinner(true);
+    // --- LIFF Login/Profile Image ---
+    async function checkLiffLoginAndProfile() {
       try {
         await liff.init({ liffId: LIFF_ID });
         if (!liff.isInClient()) {
-          alert("❌ กรุณาเปิดผ่านแอป LINE เท่านั้น");
-          showSpinner(false);
-          return;
+          alert("โปรดเปิดหน้านี้ผ่านแอป LINE เท่านั้น");
+          return false;
         }
         if (!liff.isLoggedIn()) {
           liff.login();
-          showSpinner(false);
-          return;
+          return false;
         }
         const profile = await liff.getProfile();
-        _lineUserId = profile.userId || "";
-        liffReady = true;
-        // หากเคย login แล้ว (per LINE userId) ให้ alert และ redirect ออกเสมอ
-        if (isLoggedIn()) {
-          alert("!!ปัจจุบันคุณได้เข้าสู่ระบบเรียบร้อยแล้ว กรุณารอสักครู่ระบบจะพาคุณไปที่หน้าหลักเพื่อทำรายการในลำดับถัดไป!!");
-          redirectToHome();
-          showSpinner(false);
-          return;
+        if (profile.pictureUrl) {
+          const img = document.getElementById('profileNavImg');
+          img.src = profile.pictureUrl;
+          img.alt = profile.displayName;
         }
-      } catch (err) {
-        alert("❌ LIFF error: " + (err && err.message ? err.message : JSON.stringify(err)));
+        document.getElementById('profileNavBtn').onclick = function() {
+          window.location.href = 'profile.html';
+        };
+        return true;
+      } catch (e) {
+        alert("เกิดข้อผิดพลาดในการเข้าสู่ LIFF: " + e.message);
+        return false;
       }
-      showSpinner(false);
     }
-    initLiffUserId();
 
-    // Toggle password visibility
-    document.getElementById('togglePassBtn').addEventListener('click', function() {
-      const pwdInput = document.getElementById('loginPassword');
-      const img = document.getElementById('togglePassImg');
-      if (pwdInput.type === 'password') {
-        pwdInput.type = 'text';
-        img.src = "https://i.postimg.cc/k5Pw5gBm/1750920820059-0-removebg-preview.png";
-      } else {
-        pwdInput.type = 'password';
-        img.src = "https://i.postimg.cc/Kj0skSC5/1750920832875-0-removebg-preview.png";
-      }
+    document.addEventListener('DOMContentLoaded', async () => {
+      await checkLiffLoginAndProfile();
+      renderMainCarousel();
+      renderSectionCarousel();
+      loadProfileCard();
     });
 
-    document.getElementById('forgotPasswordBtn').addEventListener('click', function() {
-      alert('กรุณาติดต่อ Support เพื่อขอรหัสผ่านใหม่');
-    });
+    // --- Carousel data (banner) ---
+    const banners = [
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2025/02/68-02-27-banner-warning-scammer-call-center-scaled.jpg",
+        link: "https://www.ktbgs.co.th/ktbgs-news/warning-to-scammer-call-center/"
+      },
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2025/03/KTGS_1659-CAC-anticorruption-scaled.jpg",
+        link: "https://www.ktbgs.co.th/ktbgs-news/cac-anti-corruption/"
+      },
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2023/05/banner-%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%AA%E0%B8%A1%E0%B8%B1%E0%B8%84%E0%B8%A3%E0%B8%87%E0%B8%B2%E0%B8%99-v-02-2500px-3-revise2-02-scaled.jpg",
+        link: "https://www.ktbgs.co.th/careers/opening-positions/"
+      },
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2021/05/ktbgs-chemical-protection-cleaning-Covid-2021.jpg",
+        link: "https://www.ktbgs.co.th/ktbgs-news/chemical-protection-cleaning/"
+      },
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2018/09/Service1-1.jpg",
+        link: "https://www.ktbgs.co.th/services/cash-logistic/"
+      },
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2018/09/20180606_06-07-57_C24_5633.jpg",
+        link: "https://www.ktbgs.co.th/services/security/"
+      },                  
+      {
+        img: "https://www.ktbgs.co.th/wp-content/uploads/2019/05/20180606_08-01-09_V56_3547_edit.jpg",
+        link: "https://www.ktbgs.co.th/services/cleaning/"
+      }
+    ];
+    let mainCarouselIndex = 0;
+    function renderMainCarousel() {
+      const carouselDiv = document.getElementById('mainCarousel');
+      carouselDiv.innerHTML = `
+        <div class="carousel-img" id="mainCarouselImg" onclick="window.open('${banners[mainCarouselIndex].link}','_blank')">
+          <img src="${banners[mainCarouselIndex].img}" alt="Banner"/>
+        </div>
+        <div class="carousel-dots">${banners.map((_,i)=>`<span class="carousel-dot${i===mainCarouselIndex?' active':''}" onclick="setMainCarouselIndex(${i})"></span>`).join('')}</div>
+      `;
+    }
+    function setMainCarouselIndex(i) {
+      mainCarouselIndex = i;
+      renderMainCarousel();
+    }
+    function mainCarouselNext() {
+      mainCarouselIndex = (mainCarouselIndex + 1) % banners.length;
+      renderMainCarousel();
+    }
+    setInterval(mainCarouselNext, 5000);
 
-    document.getElementById('supportBtn').addEventListener('click', function() {
-      window.open('tel:02 791 9800');
-    });
+    // --- Section Carousel (single image with link) --
+    const sectionBanner = {
+      img: "https://i.postimg.cc/xdV4DDFN/LINE-Rich-Menu.png",
+      link: "https://liff.line.me/2007678556-w9jamgJY/liff-camera.html"
+    };
+    function renderSectionCarousel() {
+      const carouselDiv = document.getElementById('sectionCarousel');
+      carouselDiv.innerHTML = `
+        <div class="section-carousel-img" onclick="window.open('${sectionBanner.link}','_blank')">
+          <img src="${sectionBanner.img}" alt="Section"/>
+        </div>
+      `;
+    }
 
-    // --- LOGIN ---
-    document.getElementById('loginForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      if (!_lineUserId || !liffReady) {
-        document.getElementById('loginMsg').textContent = "กรุณาเข้าใช้งานผ่าน LINE แอป";
-        document.getElementById('loginMsg').classList.add("error");
-        return;
-      }
-      // ถ้าเคย login แล้ว ห้ามเข้า (alert + redirect)
-      if (isLoggedIn()) {
-        alert("!!ปัจจุบันคุณได้เข้าสู่ระบบเรียบร้อยแล้ว กรุณารอสักครู่ระบบจะพาคุณไปที่หน้าหลักเพื่อทำรายการในลำดับถัดไป!!");
-        redirectToHome();
-        return;
-      }
-      const user = document.getElementById('loginUser').value.trim();
-      const password = document.getElementById('loginPassword').value.trim();
-      const loginMsg = document.getElementById('loginMsg');
-      loginMsg.textContent = "";
-      loginMsg.className = "msg";
-      if (!user || !password) {
-        loginMsg.textContent = "กรุณากรอก User และ Password";
-        loginMsg.classList.add("error");
-        return;
-      }
-      showSpinner(true);
-      try {
-        const res = await fetch(GAS_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain" },
-          body: JSON.stringify({ action: "login", user, password, lineUserId: _lineUserId })
-        });
-        const txt = await res.text();
-        let data;
-        try {
-          data = JSON.parse(txt);
-        } catch(e) {
-          loginMsg.textContent = "เกิดข้อผิดพลาด: ระบบตอบกลับไม่ถูกต้อง";
-          loginMsg.classList.add("error");
-          showSpinner(false);
-          return;
-        }
-        if (data.status === "ok") {
-          loginMsg.textContent = "เข้าสู่ระบบสำเร็จ";
-          loginMsg.classList.add("success");
-          setLoggedIn();
-          if (data.user && data.user.isFirstLogin) {
-            document.getElementById('loginForm').style.display = "none";
-            document.getElementById('change-password-outer').style.display = "flex";
-            document.getElementById('changePwdUsername').value = user;
-            _currentUserId = user;
-            _currentPassword = password;
-          } else {
-            await registerLineUserToSheet(user, _lineUserId);
-            setTimeout(() => redirectToHome(user, _lineUserId), 600);
-          }
+    // --- Back-Circle-Icon --
+    function handleBack() {
+       if (window.liff && liff.isInClient()) {
+        liff.closeWindow();
         } else {
-          loginMsg.textContent = data.message || "เข้าสู่ระบบไม่สำเร็จ";
-          loginMsg.classList.add("error");
-        }
-      } catch (err) {
-        loginMsg.textContent = "เกิดข้อผิดพลาด: " + err.message;
-        loginMsg.classList.add("error");
-      }
-      showSpinner(false);
-    });
+          alert("โปรดใช้งานในแอป LINE เพื่อกลับไปหน้าหลัก");
+           }
+  }
 
-    // --- CHANGE PASSWORD ---
-    document.getElementById('btnChangePassword').addEventListener('click', async function() {
-      const oldPassword = document.getElementById('oldPassword').value.trim();
-      const newPassword = document.getElementById('newPassword').value.trim();
-      const confirmPassword = document.getElementById('confirmPassword').value.trim();
-      const changePwdMsg = document.getElementById('changePwdMsg');
-      changePwdMsg.textContent = "";
-      changePwdMsg.className = "msg";
-      if (!oldPassword || !newPassword || !confirmPassword) {
-        changePwdMsg.textContent = "กรุณากรอกข้อมูลให้ครบ";
-        changePwdMsg.classList.add('error');
-        return;
+    // --- Profile Card Data from Google Sheet ---
+    async function loadProfileCard() {
+      function getQueryParam(param) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(param) || "";
       }
-      if (newPassword !== confirmPassword) {
-        changePwdMsg.textContent = "รหัสผ่านใหม่และยืนยันไม่ตรงกัน";
-        changePwdMsg.classList.add('error');
-        return;
-      }
-      if (!_currentUserId || !_lineUserId) {
-        changePwdMsg.textContent = "พบข้อผิดพลาด กรุณา login ใหม่";
-        changePwdMsg.classList.add('error');
-        return;
-      }
-      showSpinner(true);
+      const empId = getQueryParam("empId");
+      const lineUserId = getQueryParam("lineUserId");
+      if (!empId && !lineUserId) return;
+      const SHEET_API = GAS_URL;
       try {
-        const res = await fetch(GAS_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain" },
-          body: JSON.stringify({
-            action: "changePassword",
-            user: _currentUserId,
-            oldPassword,
-            newPassword,
-            lineUserId: _lineUserId
-          })
-        });
-        const txt = await res.text();
-        let data;
-        try {
-          data = JSON.parse(txt);
-        } catch(e) {
-          changePwdMsg.textContent = "เกิดข้อผิดพลาด: ระบบตอบกลับไม่ถูกต้อง";
-          changePwdMsg.classList.add('error');
-          showSpinner(false);
-          return;
+        const res = await fetch(SHEET_API + "?action=getUserProfile&empId=" + encodeURIComponent(empId) + "&lineUserId=" + encodeURIComponent(lineUserId));
+        const data = await res.json();
+        if (data && data.status === "ok" && data.user) {
+          const userProfile = data.user;
+          document.getElementById('branchValue').innerText = userProfile.N || "-";
+          document.getElementById('nameValue').innerText = ((userProfile.C||"")+(userProfile.D?" "+userProfile.D:"")) || "-";
+          document.getElementById('surnameValue').innerText = userProfile.E || "-";
+          document.getElementById('deptValue').innerText = userProfile.K || "-";
+          document.getElementById('posValue').innerText = userProfile.I || "-";
+          document.getElementById('userIdValue').innerText = userProfile.X || "-";
+          document.getElementById('actCodeValue').innerText = userProfile.O || "-";
+          document.getElementById('statusValue').innerText = userProfile.S || "-";
         }
-        if (data.status === "ok") {
-          changePwdMsg.textContent = "เปลี่ยนรหัสผ่านสำเร็จ กำลังเข้าสู่ระบบ...";
-          changePwdMsg.classList.add('success');
-          setLoggedIn();
-          await registerLineUserToSheet(_currentUserId, _lineUserId);
-          setTimeout(() => redirectToHome(_currentUserId, _lineUserId), 1200);
-        } else {
-          changePwdMsg.textContent = data.message || "เปลี่ยนรหัสผ่านไม่สำเร็จ";
-          changePwdMsg.classList.add('error');
-        }
-      } catch (err) {
-        changePwdMsg.textContent = "เกิดข้อผิดพลาด: " + err.message;
-        changePwdMsg.classList.add('error');
-      }
-      showSpinner(false);
-    });
-
-    async function registerLineUserToSheet(empId, lineUserId) {
-      try {
-        await fetch(GAS_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain" },
-          body: JSON.stringify({ action: "registerLineUserId", user: empId, lineUserId: lineUserId })
-        });
       } catch (e) {}
     }
-
-    function redirectToHome(empId, lineUserId) {
-      // ถ้ามีข้อมูลล่าสุดใช้จาก argument ถ้าไม่มีก็ใช้ global
-      const emp = empId || _currentUserId || "";
-      const lineId = lineUserId || _lineUserId || "";
-      window.location.href = HOME_LIFF_URL + `?empId=${encodeURIComponent(emp)}&lineUserId=${encodeURIComponent(lineId)}`;
-    }
-
-    window.addEventListener('DOMContentLoaded', function() {
-      showSpinner(false);
-      document.getElementById('loginForm').style.display = "";
-      document.getElementById('change-password-outer').style.display = "none";
-      // ถ้ามี _lineUserId แล้ว และเคย login แล้ว (localStorage)
-      // กรณี reload หรือเข้าจาก rich menu ให้ redirect ออกทันที
-      // (ใน initLiffUserId จะ handle อีกทีหลัง liff พร้อม)
-    });
   </script>
 </body>
 </html>
